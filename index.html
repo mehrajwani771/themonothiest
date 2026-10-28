@@ -170,5 +170,6 @@ document.getElementById("mf").onsubmit=function(e){
  e.preventDefault();
  var f=this.elements;location.href="mailto:"+CONTACT_EMAIL+"?subject="+encodeURIComponent("Message from "+f[0].value)+"&body="+encodeURIComponent(f[2].value+"\n\n"+f[1].value);document.getElementById("ms").textContent="Opening your email app…"};
 </script>
+ <script src="results.js"></script>
 </body>
 </html>
