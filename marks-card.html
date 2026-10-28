@@ -1,5 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Marks Card Portal | Abu Bakar Memorial Trust, Lolipora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+:root {
+  --navy: #0B1B3D;
+  --navy-light: #162B55;
+  --gold: #C59B27;
+  --gold-light: #DFBA4E;
+  --bg-gray: #F4F6FA;
+  --white: #FFFFFF;
+  --border: #CBD5E1;
+  --text-dark: #1E293B;
+  --text-muted: #64748B;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg-gray);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+header {
+  background: var(--navy);
+  color: var(--white);
+  border-bottom: 4px solid var(--gold);
+  padding: 14px 20px;
+}
+.header-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.brand-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.brand-sub {
+  font-size: 0.75rem;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.home-link {
+  color: #E2E8F0;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.08);
+  transition: 0.2s;
+}
+.home-link:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 16px;
+}
+.portal-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 18px rgba(11,27,61,0.06);
+  padding: 28px 24px;
+  margin-bottom: 30px;
+}
+.portal-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+.portal-header h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.portal-header p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 2fr auto;
+  gap: 12px;
+  align-items: end;
+}
+@media (max-width: 768px) {
+  .search-form { grid-template-columns: 1fr; }
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  background: #F8FAFC;
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--navy);
+  background: #FFF;
+}
+.btn-submit {
+  padding: 11px 22px;
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+  height: 44px;
+}
+.btn-submit:hover {
+  background: var(--navy-light);
+}
+
+#statusMsg {
+  margin-top: 15px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  display: none;
+}
+.msg-error {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid #FCA5A5;
+}
+.msg-success {
+  background: #DCFCE7;
+  color: #166534;
+  border: 1px solid #86EFAC;
+}
+
+.action-bar {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.action-bar-title {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 0.95rem;
+}
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btn-action {
+  padding: 9px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s;
+}
+.btn-pdf { background: #DC2626; color: #FFF; }
+.btn-pdf:hover { background: #B91C1C; }
+.btn-img { background: #2563EB; color: #FFF; }
+.btn-img:hover { background: #1D4ED8; }
+.btn-print { background: var(--navy); color: #FFF; }
+.btn-print:hover { background: var(--navy-light); }
+
+#reportCardContainer {
+  display: none;
+}
+.hpr-sheet {
+  background: #FFFFFF;
+  padding: 35px 30px;
+  border: 2px solid #000;
+  margin: 0 auto 40px;
+  color: #000;
+  font-family: 'Times New Roman', Times, serif;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+  position: relative;
+}
+.hpr-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #000;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+.hpr-crest { width: 70px; height: 70px; }
+.hpr-header-center { text-align: center; flex: 1; }
+.hpr-school-title {
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #0B1B3D;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.hpr-school-sub {
+  font-size: 0.95rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.hpr-title-badge {
+  display: inline-block;
+  background: #0B1B3D;
+  color: #FFF;
+  padding: 3px 14px;
+  font-size: 0.82rem;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  border-radius: 3px;
+  margin-top: 4px;
+}
+
+.hpr-meta-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+  font-size: 0.88rem;
+}
+.hpr-meta-table td {
+  padding: 4px 6px;
+  border: 1px solid #444;
+}
+.meta-lbl {
+  font-weight: bold;
+  background: #F8FAFC;
+  width: 18%;
+}
+.meta-val {
+  width: 32%;
+}
+
+.hpr-marks-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+.hpr-marks-table th, .hpr-marks-table td {
+  border: 1px solid #000;
+  padding: 4.5px 3px;
+}
+.hpr-marks-table th {
+  background: #EEF2F6;
+  font-weight: bold;
+}
+.sub-name {
+  text-align: left;
+  font-weight: bold;
+  padding-left: 8px;
+}
+
+.hpr-score-summary {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.hpr-score-summary th, .hpr-score-summary td {
+  border: 1px solid #000;
+  padding: 6px;
+}
+.hpr-score-summary th {
+  background: #0B1B3D;
+  color: #FFF;
+}
+
+.hpr-details-strip {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #444;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  background: #F8FAFC;
+  margin-bottom: 12px;
+}
+.hpr-grading-box {
+  border: 1px solid #444;
+  padding: 4px 8px;
+  font-size: 0.74rem;
+  text-align: center;
+  background: #FFF;
+  margin-bottom: 18px;
+}
+
+.hpr-signatures {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 8px 24px 0;
+  margin-top: 10px;
+}
+.sig-block {
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: bold;
+}
+
+.hpr-footer-note {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: #475569;
+  text-align: center;
+  margin-top: 14px;
+  border-top: 1px dashed #AAA;
+  padding-top: 5px;
+}
+
+@media print {
+  header, .portal-card, .action-bar { display: none !important; }
+  body { background: #FFF !important; padding: 0 !important; }
+  .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+  #reportCardContainer { display: block !important; }
+  .hpr-sheet { border: 2px solid #000 !important; box-shadow: none !important; margin: 0 !important; padding: 20px !important; width: 100% !important; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-wrap">
+    <div class="brand-box">
+      <svg class="hpr-crest" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="48" fill="#0B1B3D" stroke="#C59B27" stroke-width="3"/>
+        <circle cx="50" cy="50" r="42" fill="#FFFFFF" stroke="#C59B27" stroke-width="1.5"/>
+        <path d="M50 24 L52 29 L57 26 L56 31 L62 30 L59 34 L65 36 L61 39 L66 43 L61 44 L64 49 L59 48 L60 53 L55 50 L54 55 L50 51 L46 55 L45 50 L40 53 L41 48 L36 49 L39 44 L34 43 L39 39 L35 36 L41 34 L38 30 L44 31 L43 26 L48 29 Z" fill="#E28B1A"/>
+        <path d="M30 64 C38 60 46 62 50 67 C54 62 62 60 70 64 L70 50 C62 46 54 48 50 53 C46 48 38 46 30 50 Z" fill="#0B1B3D" stroke="#C59B27" stroke-width="1.5"/>
+      </svg>
+      <div>
+        <div class="brand-title">Abu Bakar Memorial Trust</div>
+        <div class="brand-sub">Lolipora, Pattan &bull; Holistic Progress Report Portal</div>
+      </div>
+    </div>
+    <a href="index.html" class="home-link">&larr; Return to Main Site</a>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="portal-card">
+    <div class="portal-header">
+      <h2>View & Download Student Marks Card</h2>
+      <p>Enter the student's Class, Roll Number, and Full Name.</p>
+    </div>
+
+    <form class="search-form" id="lookupForm" onsubmit="handleLookup(event)">
+      <div class="form-group">
+        <label for="studentClass">Class</label>
+        <select id="studentClass" class="form-control" required>
+          <option value="">Select Class</option>
+          <option value="Nursery">Nursery</option>
+          <option value="LKG">LKG</option>
+          <option value="UKG">UKG</option>
+          <option value="1st">Class 1st</option>
+          <option value="2nd">Class 2nd</option>
+          <option value="3rd">Class 3rd</option>
+          <option value="4th">Class 4th</option>
+          <option value="5th">Class 5th</option>
+          <option value="6th">Class 6th</option>
+          <option value="7th">Class 7th</option>
+          <option value="8th">Class 8th</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="studentRoll">Roll Number</label>
+        <input type="number" id="studentRoll" class="form-control" placeholder="e.g. 1" required>
+      </div>
+
+      <div class="form-group">
+        <label for="studentName">Student Full Name</label>
+        <input type="text" id="studentName" class="form-control" placeholder="e.g. Seerat Lateef" required>
+      </div>
+
+      <button type="submit" class="btn-submit">Search Marks Card</button>
+    </form>
+
+    <div id="statusMsg"></div>
+  </div>
+
+  <div id="actionBar" class="action-bar">
+    <div class="action-bar-title" id="actionStudentLabel">Marks Card Ready</div>
+    <div class="action-buttons">
+      <button class="btn-action btn-pdf" onclick="downloadMarksCardPDF()">
+        &#128196; Download PDF
+      </button>
+      <button class="btn-action btn-img" onclick="downloadMarksCardImage()">
+        &#128247; Download Image (PNG)
+      </button>
+      <button class="btn-action btn-print" onclick="window.print()">
+        &#128424; Print Card
+      </button>
+    </div>
+  </div>
+
+  <div id="reportCardContainer">
+    <div id="hprSheet" class="hpr-sheet"></div>
+  </div>
+
+</main>
+
 <script>
-// Complete Verified Database of Students from ABMT Official Records
 const STUDENTS = [
   // --- CLASS 8TH ---
   {class:"8th", roll:1, name:"SEERAT LATEEF", father:"LATEEF AHMAD MIR", mother:"MARYAMA BEGUM", dob:"10-08-2014", gender:"Female", session:"2026-27", admNo:"138", marksObt:840, marksMax:900, pct:"93.33%", grade:"A+", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
@@ -26,7 +479,7 @@ const STUDENTS = [
       {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
       {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
     ]},
-  {class:"8th", roll:3, name:"MOHAMMAD AZAN GANAIE", father:"MOHAMMAD ASHRAF GANAIE", mother:"ULFATH BEGUM", dob:"10-07-2014", gender:"Male", session:"2026-27", admNo:"140", marksObt:700, marksMax:900, pct:"77.78%", grade:"B", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
+  {class:"8th", roll:3, name:"MOHAMMAD AZAN GANAIE", father:"MOHAMMAD ASHRAF GANAIE", mother:"ULFAT BEGUM", dob:"10-07-2014", gender:"Male", session:"2026-27", admNo:"140", marksObt:700, marksMax:900, pct:"77.78%", grade:"B", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
     subjects:[
       {name:"ENGLISH", f1:5, f2:5, f3:3, f4:2, f5:4, f6:5, fa:24, ccc:17, sa:32, total:73},
       {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:18, sa:41, total:89},
@@ -159,7 +612,7 @@ const STUDENTS = [
       {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:19, sa:50, total:99}
     ]},
 
-  // --- NURSERY (Sample Set) ---
+  // --- NURSERY ---
   {class:"Nursery", roll:1, name:"MUZAMIL FAYAZ GANAIE", father:"FAYAZ AHMAD GANAIE", mother:"PARMEENA BANO", dob:"04-10-2022", gender:"Male", session:"2026-27", admNo:"422", marksObt:547, marksMax:600, pct:"91.17%", grade:"A+", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"LKG", date:"29-10-2026",
     subjects:[
       {name:"ENGLISH", f1:3, f2:4, f3:3, f4:4, f5:3, f6:4, fa:21, ccc:20, sa:50, total:91},
@@ -168,36 +621,60 @@ const STUDENTS = [
       {name:"SCIENCE", f1:4, f2:5, f3:4, f4:5, f5:4, f6:4, fa:26, ccc:20, sa:50, total:96},
       {name:"ETHICS / ISLAMIYAT", f1:3, f2:3, f3:3, f4:3, f5:3, f6:3, fa:18, ccc:20, sa:45, total:83},
       {name:"AL-QURAN", f1:3, f2:5, f3:3, f4:5, f5:2, f6:3, fa:21, ccc:20, sa:48, total:89}
+    ]},
+  {class:"Nursery", roll:2, name:"ARHA ZEHRISH", father:"WASEEM AKBAR WANI", mother:"MUBEENA BANO", dob:"23-02-2021", gender:"Female", session:"2026-27", admNo:"423", marksObt:599, marksMax:600, pct:"99.83%", grade:"A+", result:"PASSED", remarks:"Passed – 2nd Position", conduct:"Good", promoted:"LKG", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:4, f6:5, fa:29, ccc:20, sa:50, total:99}
+    ]},
+
+  // --- CLASS 6TH ---
+  {class:"6th", roll:4, name:"MIR KIFAYAT NASEER", father:"NASEER AHMAD MIR", mother:"AFROZA BEGUM", dob:"11-08-2016", gender:"Male", session:"2026-27", admNo:"164", marksObt:999, marksMax:1000, pct:"99.90%", grade:"A+", result:"PASSED", remarks:"1st Position in his Class and 1st Position in the School.", conduct:"Good", promoted:"7th", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:49, total:99},
+      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"KASHMIRI", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"SOCIAL SCIENCE / EVS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"ARABIC", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"COMPUTER", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
     ]}
 ];
 
 let activeStudent = null;
 
-function normalize(str) {
-  return (str || "").toLowerCase().replace(/[^a-z0-9]/g, '');
+function cleanStr(s) {
+  return (s || "").toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
 function handleLookup(e) {
   e.preventDefault();
-  
-  // Clean inputs
+
+  // Normalize selected class (e.g. "Class 8th" -> "8th")
   let cls = document.getElementById("studentClass").value.trim().toLowerCase();
-  cls = cls.replace(/^class\s*/i, ''); // handles "8th" or "Class 8th"
-  
+  cls = cls.replace(/^class\s*/i, '');
+
   const roll = parseInt(document.getElementById("studentRoll").value.trim(), 10);
-  const nameQuery = normalize(document.getElementById("studentName").value.trim());
+  const nameQuery = cleanStr(document.getElementById("studentName").value.trim());
 
   const msg = document.getElementById("statusMsg");
   const actionBar = document.getElementById("actionBar");
   const container = document.getElementById("reportCardContainer");
 
-  // Search by roll and fuzzy matching on name
+  // Search logic: matches class, roll, and name flexibly
   const student = STUDENTS.find(s => {
     const sClass = s.class.toLowerCase().replace(/^class\s*/i, '');
     const classMatch = (sClass === cls);
     const rollMatch = (s.roll === roll);
-    const sName = normalize(s.name);
-    const nameMatch = sName.includes(nameQuery) || nameQuery.includes(sName);
+    const sName = cleanStr(s.name);
+    const nameMatch = !nameQuery || sName.includes(nameQuery) || nameQuery.includes(sName);
     return classMatch && rollMatch && nameMatch;
   });
 
@@ -396,3 +873,6 @@ function downloadMarksCardImage() {
   });
 }
 </script>
+
+</body>
+</html>
