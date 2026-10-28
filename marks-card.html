@@ -1,637 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Student Marks Card Portal | Abu Bakar Memorial Trust, Lolipora</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- html2pdf bundle (includes jsPDF and html2canvas for PDF and Image exports) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-<style>
-:root {
-  --navy: #0B1B3D;
-  --navy-light: #162B55;
-  --gold: #C59B27;
-  --gold-light: #DFBA4E;
-  --gold-pale: #FBF6E9;
-  --bg-gray: #F4F6FA;
-  --white: #FFFFFF;
-  --border: #CBD5E1;
-  --text-dark: #1E293B;
-  --text-muted: #64748B;
-  --radius: 10px;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--bg-gray);
-  color: var(--text-dark);
-  line-height: 1.6;
-}
-
-/* TOP HEADER */
-header {
-  background: var(--navy);
-  color: var(--white);
-  border-bottom: 4px solid var(--gold);
-  padding: 14px 20px;
-}
-.header-wrap {
-  max-width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.brand-box {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.brand-title {
-  font-family: 'Cinzel', serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-.brand-sub {
-  font-size: 0.75rem;
-  color: var(--gold-light);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.home-link {
-  color: #E2E8F0;
-  text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.08);
-  transition: 0.2s;
-}
-.home-link:hover {
-  background: var(--gold);
-  color: var(--navy);
-}
-
-/* MAIN FORM CONTAINER */
-.container {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 0 16px;
-}
-.portal-card {
-  background: var(--white);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 18px rgba(11,27,61,0.06);
-  padding: 28px 24px;
-  margin-bottom: 30px;
-}
-.portal-header {
-  text-align: center;
-  margin-bottom: 22px;
-}
-.portal-header h2 {
-  font-family: 'Cinzel', serif;
-  font-size: 1.6rem;
-  color: var(--navy);
-  margin-bottom: 6px;
-}
-.portal-header p {
-  color: var(--text-muted);
-  font-size: 0.92rem;
-}
-
-.search-form {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 2fr auto;
-  gap: 12px;
-  align-items: end;
-}
-@media (max-width: 768px) {
-  .search-form { grid-template-columns: 1fr; }
-}
-
-.form-group label {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--navy);
-  margin-bottom: 5px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.form-control {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1.5px solid var(--border);
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 0.92rem;
-  background: #F8FAFC;
-}
-.form-control:focus {
-  outline: none;
-  border-color: var(--navy);
-  background: #FFF;
-}
-.btn-submit {
-  padding: 11px 22px;
-  background: var(--navy);
-  color: var(--white);
-  border: none;
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: 0.2s;
-  height: 44px;
-}
-.btn-submit:hover {
-  background: var(--navy-light);
-}
-
-#statusMsg {
-  margin-top: 15px;
-  padding: 10px 14px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  display: none;
-}
-.msg-error {
-  background: #FEE2E2;
-  color: #991B1B;
-  border: 1px solid #FCA5A5;
-}
-.msg-success {
-  background: #DCFCE7;
-  color: #166534;
-  border: 1px solid #86EFAC;
-}
-
-/* MARKS CARD ACTION BAR */
-.action-bar {
-  display: none;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--white);
-  border: 1px solid var(--border);
-  padding: 14px 20px;
-  border-radius: var(--radius);
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-.action-bar-title {
-  font-weight: 700;
-  color: var(--navy);
-  font-size: 0.95rem;
-}
-.action-buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.btn-action {
-  padding: 9px 18px;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: 0.2s;
-}
-.btn-pdf { background: #DC2626; color: #FFF; }
-.btn-pdf:hover { background: #B91C1C; }
-.btn-img { background: #2563EB; color: #FFF; }
-.btn-img:hover { background: #1D4ED8; }
-.btn-print { background: var(--navy); color: #FFF; }
-.btn-print:hover { background: var(--navy-light); }
-
-/* AUTHENTIC PROGRESS REPORT CARD CONTAINER */
-#reportCardContainer {
-  display: none;
-}
-.hpr-sheet {
-  background: #FFFFFF;
-  padding: 35px 30px;
-  border: 2px solid #000;
-  margin: 0 auto 40px;
-  color: #000;
-  font-family: 'Times New Roman', Times, serif;
-  box-shadow: 0 4px 25px rgba(0,0,0,0.08);
-  position: relative;
-}
-.hpr-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 2px solid #000;
-  padding-bottom: 12px;
-  margin-bottom: 14px;
-}
-.hpr-crest { width: 70px; height: 70px; }
-.hpr-header-center { text-align: center; flex: 1; }
-.hpr-school-title {
-  font-size: 1.55rem;
-  font-weight: 900;
-  color: #0B1B3D;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.hpr-school-sub {
-  font-size: 0.95rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-.hpr-title-badge {
-  display: inline-block;
-  background: #0B1B3D;
-  color: #FFF;
-  padding: 3px 14px;
-  font-size: 0.82rem;
-  font-weight: bold;
-  letter-spacing: 1.5px;
-  border-radius: 3px;
-  margin-top: 4px;
-}
-
-.hpr-meta-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 12px;
-  font-size: 0.88rem;
-}
-.hpr-meta-table td {
-  padding: 4px 6px;
-  border: 1px solid #444;
-}
-.meta-lbl {
-  font-weight: bold;
-  background: #F8FAFC;
-  width: 18%;
-}
-.meta-val {
-  width: 32%;
-}
-
-.hpr-marks-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 12px;
-  font-size: 0.8rem;
-  text-align: center;
-}
-.hpr-marks-table th, .hpr-marks-table td {
-  border: 1px solid #000;
-  padding: 4.5px 3px;
-}
-.hpr-marks-table th {
-  background: #EEF2F6;
-  font-weight: bold;
-}
-.sub-name {
-  text-align: left;
-  font-weight: bold;
-  padding-left: 8px;
-}
-
-.hpr-score-summary {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 12px;
-  font-size: 0.9rem;
-  text-align: center;
-}
-.hpr-score-summary th, .hpr-score-summary td {
-  border: 1px solid #000;
-  padding: 6px;
-}
-.hpr-score-summary th {
-  background: #0B1B3D;
-  color: #FFF;
-}
-
-.hpr-details-strip {
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid #444;
-  padding: 6px 12px;
-  font-size: 0.85rem;
-  background: #F8FAFC;
-  margin-bottom: 12px;
-}
-.hpr-grading-box {
-  border: 1px solid #444;
-  padding: 4px 8px;
-  font-size: 0.74rem;
-  text-align: center;
-  background: #FFF;
-  margin-bottom: 18px;
-}
-
-.hpr-signatures {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 8px 24px 0;
-  margin-top: 10px;
-}
-.sig-block {
-  text-align: center;
-  font-size: 0.82rem;
-  font-weight: bold;
-}
-
-.hpr-footer-note {
-  font-size: 0.72rem;
-  font-style: italic;
-  color: #475569;
-  text-align: center;
-  margin-top: 14px;
-  border-top: 1px dashed #AAA;
-  padding-top: 5px;
-}
-
-/* PRINT MEDIA */
-@media print {
-  header, .portal-card, .action-bar, footer { display: none !important; }
-  body { background: #FFF !important; padding: 0 !important; }
-  .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
-  #reportCardContainer { display: block !important; }
-  .hpr-sheet { border: 2px solid #000 !important; box-shadow: none !important; margin: 0 !important; padding: 20px !important; width: 100% !important; }
-}
-</style>
-</head>
-<body>
-
-<header>
-  <div class="header-wrap">
-    <div class="brand-box">
-      <!-- School Logo Crest SVG -->
-      <svg class="hpr-crest" viewBox="0 0 100 100" fill="none">
-        <circle cx="50" cy="50" r="48" fill="#0B1B3D" stroke="#C59B27" stroke-width="3"/>
-        <circle cx="50" cy="50" r="42" fill="#FFFFFF" stroke="#C59B27" stroke-width="1.5"/>
-        <path d="M50 24 L52 29 L57 26 L56 31 L62 30 L59 34 L65 36 L61 39 L66 43 L61 44 L64 49 L59 48 L60 53 L55 50 L54 55 L50 51 L46 55 L45 50 L40 53 L41 48 L36 49 L39 44 L34 43 L39 39 L35 36 L41 34 L38 30 L44 31 L43 26 L48 29 Z" fill="#E28B1A"/>
-        <path d="M30 64 C38 60 46 62 50 67 C54 62 62 60 70 64 L70 50 C62 46 54 48 50 53 C46 48 38 46 30 50 Z" fill="#0B1B3D" stroke="#C59B27" stroke-width="1.5"/>
-      </svg>
-      <div>
-        <div class="brand-title">Abu Bakar Memorial Trust</div>
-        <div class="brand-sub">Lolipora, Pattan &bull; Holistic Progress Report Portal</div>
-      </div>
-    </div>
-    <a href="index.html" class="home-link">&larr; Return to Main Site</a>
-  </div>
-</header>
-
-<main class="container">
-
-  <!-- STUDENT LOOKUP CARD -->
-  <div class="portal-card">
-    <div class="portal-header">
-      <h2>View & Download Student Marks Card</h2>
-      <p>Enter the student's Class, Roll Number, and Full Name as registered in school records.</p>
-    </div>
-
-    <form class="search-form" id="lookupForm" onsubmit="handleLookup(event)">
-      <div class="form-group">
-        <label for="studentClass">Class</label>
-        <select id="studentClass" class="form-control" required>
-          <option value="">Select Class</option>
-          <option value="Nursery">Nursery</option>
-          <option value="LKG">LKG</option>
-          <option value="UKG">UKG</option>
-          <option value="1st">Class 1st</option>
-          <option value="2nd">Class 2nd</option>
-          <option value="3rd">Class 3rd</option>
-          <option value="4th">Class 4th</option>
-          <option value="5th">Class 5th</option>
-          <option value="6th">Class 6th</option>
-          <option value="7th">Class 7th</option>
-          <option value="8th">Class 8th</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="studentRoll">Roll Number</label>
-        <input type="number" id="studentRoll" class="form-control" placeholder="e.g. 1" required>
-      </div>
-
-      <div class="form-group">
-        <label for="studentName">Student Full Name</label>
-        <input type="text" id="studentName" class="form-control" placeholder="e.g. Muzamil Fayaz Ganaie" required>
-      </div>
-
-      <button type="submit" class="btn-submit">Search Marks Card</button>
-    </form>
-
-    <div id="statusMsg"></div>
-  </div>
-
-  <!-- EXPORT & PRINT BUTTON BAR -->
-  <div id="actionBar" class="action-bar">
-    <div class="action-bar-title" id="actionStudentLabel">Marks Card Ready</div>
-    <div class="action-buttons">
-      <button class="btn-action btn-pdf" onclick="downloadMarksCardPDF()">
-        &#128196; Download PDF
-      </button>
-      <button class="btn-action btn-img" onclick="downloadMarksCardImage()">
-        &#128247; Download Image (PNG)
-      </button>
-      <button class="btn-action btn-print" onclick="window.print()">
-        &#128424; Print Card
-      </button>
-    </div>
-  </div>
-
-  <!-- MARKS CARD REPORT SHEET AREA -->
-  <div id="reportCardContainer">
-    <div id="hprSheet" class="hpr-sheet">
-      <!-- Injected by JavaScript on search -->
-    </div>
-  </div>
-
-</main>
-
 <script>
-// Master database of students extracted from ABMT official documents
+// Complete Verified Database of Students from ABMT Official Records
 const STUDENTS = [
-  // NURSERY
-  {class:"Nursery", roll:1, name:"MUZAMIL FAYAZ GANAIE", father:"FAYAZ AHMAD GANAIE", mother:"PARMEENA BANO", dob:"04-10-2022", gender:"Male", session:"2026-27", admNo:"422", marksObt:547, marksMax:600, pct:"91.17%", grade:"A+", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"LKG", date:"29-10-2026",
+  // --- CLASS 8TH ---
+  {class:"8th", roll:1, name:"SEERAT LATEEF", father:"LATEEF AHMAD MIR", mother:"MARYAMA BEGUM", dob:"10-08-2014", gender:"Female", session:"2026-27", admNo:"138", marksObt:840, marksMax:900, pct:"93.33%", grade:"A+", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
     subjects:[
-      {name:"ENGLISH", f1:3, f2:4, f3:3, f4:4, f5:3, f6:4, fa:21, ccc:20, sa:50, total:91},
-      {name:"URDU", f1:4, f2:5, f3:4, f4:5, f5:3, f6:4, fa:25, ccc:20, sa:48, total:93},
-      {name:"MATHEMATICS", f1:4, f2:5, f3:5, f4:5, f5:4, f6:4, fa:27, ccc:20, sa:48, total:95},
-      {name:"SCIENCE", f1:4, f2:5, f3:4, f4:5, f5:4, f6:4, fa:26, ccc:20, sa:50, total:96},
-      {name:"ETHICS / ISLAMIYAT", f1:3, f2:3, f3:3, f4:3, f5:3, f6:3, fa:18, ccc:20, sa:45, total:83},
-      {name:"AL-QURAN", f1:3, f2:5, f3:3, f4:5, f5:2, f6:3, fa:21, ccc:20, sa:48, total:89}
-    ]},
-  {class:"Nursery", roll:2, name:"ARHA ZEHRISH", father:"WASEEM AKBAR WANI", mother:"MUBEENA BANO", dob:"23-02-2021", gender:"Female", session:"2026-27", admNo:"423", marksObt:599, marksMax:600, pct:"99.83%", grade:"A+", result:"PASSED", remarks:"Passed – 2nd Position", conduct:"Good", promoted:"LKG", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:4, f5:5, f6:5, fa:29, ccc:20, sa:38, total:87},
       {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:4, f6:5, fa:29, ccc:20, sa:50, total:99}
-    ]},
-  {class:"Nursery", roll:3, name:"SUFWAN SHOWKAT", father:"SHOWKAT AHMAD WANI", mother:"DILSHADA BEGUM", dob:"07-07-2021", gender:"Male", session:"2026-27", admNo:"424", marksObt:509, marksMax:600, pct:"84.83%", grade:"A", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"LKG", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:3, f2:4, f3:3, f4:4, f5:2, f6:3, fa:19, ccc:18, sa:42, total:79},
-      {name:"URDU", f1:4, f2:5, f3:4, f4:5, f5:4, f6:5, fa:27, ccc:18, sa:44, total:89},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:4, f6:5, fa:29, ccc:19, sa:40, total:88},
-      {name:"SCIENCE", f1:4, f2:4, f3:4, f4:4, f5:3, f6:4, fa:23, ccc:18, sa:45, total:86},
-      {name:"ETHICS / ISLAMIYAT", f1:3, f2:3, f3:3, f4:4, f5:3, f6:3, fa:19, ccc:18, sa:42, total:79},
-      {name:"AL-QURAN", f1:4, f2:5, f3:4, f4:5, f5:3, f6:3, fa:24, ccc:19, sa:45, total:88}
-    ]},
-  {class:"Nursery", roll:4, name:"ALEEZA MUDASIR", father:"MUDASIR AHMAD WANI", mother:"RIFAT", dob:"15-12-2021", gender:"Female", session:"2026-27", admNo:"425", marksObt:600, marksMax:600, pct:"100.00%", grade:"A+", result:"PASSED", remarks:"Passed – 1st Position", conduct:"Good", promoted:"LKG", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
-    ]},
-  {class:"Nursery", roll:5, name:"HAIDER NISAR", father:"NISAR AHMAD WANI", mother:"SAKEENA BANO", dob:"23-04-2022", gender:"Male", session:"2026-27", admNo:"426", marksObt:561, marksMax:600, pct:"93.50%", grade:"A+", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"LKG", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:3, f2:4, f3:3, f4:4, f5:4, f6:5, fa:23, ccc:20, sa:50, total:93},
-      {name:"URDU", f1:4, f2:5, f3:4, f4:5, f5:5, f6:5, fa:28, ccc:20, sa:50, total:98},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:4, f6:5, fa:29, ccc:20, sa:50, total:99},
-      {name:"SCIENCE", f1:4, f2:5, f3:4, f4:5, f5:3, f6:3, fa:24, ccc:20, sa:45, total:89},
-      {name:"ETHICS / ISLAMIYAT", f1:4, f2:4, f3:4, f4:4, f5:3, f6:3, fa:22, ccc:20, sa:50, total:92},
-      {name:"AL-QURAN", f1:4, f2:5, f3:4, f4:5, f5:3, f6:4, fa:25, ccc:20, sa:45, total:90}
-    ]},
-  {class:"Nursery", roll:6, name:"MOHAMMAD IBRAHIM WANI", father:"ROUF AHMAD WANI", mother:"SAMEERA BANO", dob:"05-09-2022", gender:"Male", session:"2026-27", admNo:"427", marksObt:506, marksMax:600, pct:"84.33%", grade:"A", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"LKG", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:3, f2:3, f3:2, f4:3, f5:4, f6:4, fa:19, ccc:19, sa:45, total:83},
-      {name:"URDU", f1:2, f2:3, f3:3, f4:3, f5:5, f6:5, fa:21, ccc:20, sa:50, total:91},
-      {name:"MATHEMATICS", f1:2, f2:3, f3:2, f4:3, f5:4, f6:4, fa:18, ccc:20, sa:50, total:88},
-      {name:"SCIENCE", f1:3, f2:3, f3:3, f4:4, f5:4, f6:4, fa:21, ccc:19, sa:40, total:80},
-      {name:"ETHICS / ISLAMIYAT", f1:2, f2:2, f3:2, f4:3, f5:4, f6:4, fa:17, ccc:19, sa:47, total:83},
-      {name:"AL-QURAN", f1:3, f2:3, f3:2, f4:3, f5:3, f6:3, fa:17, ccc:19, sa:45, total:81}
-    ]},
-  {class:"Nursery", roll:7, name:"AIZA NAZIR", father:"NAZIR AHMAD GANAIE", mother:"SAIMA BEGUM", dob:"30-06-2022", gender:"Female", session:"2026-27", admNo:"428", marksObt:594, marksMax:600, pct:"99.00%", grade:"A+", result:"PASSED", remarks:"Passed – 3rd Position", conduct:"Good", promoted:"LKG", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:4, f6:5, fa:29, ccc:20, sa:47, total:96},
-      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:4, f6:5, fa:29, ccc:20, sa:50, total:99},
-      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:4, f6:5, fa:29, ccc:20, sa:50, total:99},
-      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
-    ]},
-
-  // LKG
-  {class:"LKG", roll:1, name:"ZIYAN NAZIR", father:"NAZIR AHMAD WANI", mother:"SHAHEENA NAZIR", dob:"27-01-2021", gender:"Male", session:"2026-27", admNo:"409", marksObt:600, marksMax:600, pct:"100.00%", grade:"A+", result:"PASSED", remarks:"Passed – 1st Position", conduct:"Good", promoted:"UKG", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
-    ]},
-  {class:"LKG", roll:6, name:"FAWAD AHMAD PANDITH", father:"JALEEL AHMAD PANDITH", mother:"DILSHADA BANO", dob:"27-11-2019", gender:"Male", session:"2026-27", admNo:"418", marksObt:600, marksMax:600, pct:"100.00%", grade:"A+", result:"PASSED", remarks:"Passed – 1st Position", conduct:"Good", promoted:"UKG", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
-    ]},
-
-  // UKG
-  {class:"UKG", roll:2, name:"TOIBA NAZIR", father:"NAZIR AHMAD GANAIE", mother:"SAIMA BEGUM", dob:"26-02-2020", gender:"Female", session:"2026-27", admNo:"390", marksObt:600, marksMax:600, pct:"100.00%", grade:"A+", result:"PASSED", remarks:"Passed – 1st Position", conduct:"Good", promoted:"1st", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
-    ]},
-  {class:"UKG", roll:4, name:"AFIYA LATEEF", father:"LATEEF AHMAD WANI", mother:"NASEEMA BEGUM", dob:"11-03-2019", gender:"Female", session:"2026-27", admNo:"396", marksObt:600, marksMax:600, pct:"100.00%", grade:"A+", result:"PASSED", remarks:"Passed – 1st Position", conduct:"Good", promoted:"1st", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
-    ]},
-
-  // CLASS 1ST
-  {class:"1st", roll:14, name:"ARWA JAN", father:"SUHAIL AHMAD WANI", mother:"HAREEFA", dob:"07-08-2019", gender:"Female", session:"2026-27", admNo:"430", marksObt:890, marksMax:900, pct:"98.89%", grade:"A+", result:"PASSED", remarks:"Passed – 1st Position", conduct:"Good", promoted:"2nd", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:4, f2:4, f3:5, f4:5, f5:5, f6:5, fa:28, ccc:20, sa:50, total:98},
-      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"KASHMIRI", f1:4, f2:4, f3:4, f4:5, f5:5, f6:5, fa:27, ccc:20, sa:50, total:97},
-      {name:"MATHEMATICS", f1:4, f2:4, f3:5, f4:5, f5:5, f6:5, fa:28, ccc:20, sa:50, total:98},
-      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:48, total:98},
-      {name:"ARABIC", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"COMPUTER", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:49, total:99},
-      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
-    ]},
-
-  // CLASS 4TH
-  {class:"4th", roll:4, name:"USMAN HILAL", father:"HILAL AHMAD MIR", mother:"MEEMA BANO", dob:"21-11-2016", gender:"Male", session:"2026-27", admNo:"372", marksObt:885, marksMax:900, pct:"98.33%", grade:"A+", result:"PASSED", remarks:"Passed – 1st Position", conduct:"Good", promoted:"5th", date:"29-10-2026",
-    subjects:[
-      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:49, total:99},
-      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:47, total:97},
       {name:"KASHMIRI", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:39, total:89},
-      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"ARABIC", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"COMPUTER", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:44, total:94},
+      {name:"SCIENCE", f1:3, f2:4, f3:2, f4:3, f5:4, f6:4, fa:20, ccc:20, sa:36, total:76},
+      {name:"SOCIAL SCIENCE / EVS", f1:5, f2:5, f3:4, f4:5, f5:5, f6:5, fa:29, ccc:20, sa:46, total:95},
+      {name:"COMPUTER", f1:4, f2:4, f3:4, f4:5, f5:5, f6:5, fa:27, ccc:20, sa:47, total:94},
+      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:44, total:94},
       {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
     ]},
-
-  // CLASS 6TH TOPPER
-  {class:"6th", roll:4, name:"MIR KIFAYAT NASEER", father:"NASEER AHMAD MIR", mother:"AFROZA BEGUM", dob:"11-08-2016", gender:"Male", session:"2026-27", admNo:"164", marksObt:999, marksMax:1000, pct:"99.90%", grade:"A+", result:"PASSED", remarks:"1st Position in his Class and 1st Position in the School.", conduct:"Good", promoted:"7th", date:"29-10-2026",
+  {class:"8th", roll:2, name:"FAISAL MAJEED", father:"ABDUL MAJEED AHANGER", mother:"ATEEQA BEGUM", dob:"10-08-2014", gender:"Male", session:"2026-27", admNo:"139", marksObt:872, marksMax:900, pct:"96.89%", grade:"A+", result:"PASSED", remarks:"Passed – 2nd Position", conduct:"Good", promoted:"9th", date:"29-10-2026",
     subjects:[
-      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:49, total:99},
+      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:41, total:91},
       {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
       {name:"KASHMIRI", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
       {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"SCIENCE", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"SOCIAL SCIENCE / EVS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"ARABIC", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"COMPUTER", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"SCIENCE", f1:4, f2:4, f3:3, f4:3, f5:4, f6:5, fa:23, ccc:20, sa:44, total:87},
+      {name:"SOCIAL SCIENCE / EVS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:47, total:97},
+      {name:"COMPUTER", f1:4, f2:4, f3:5, f4:5, f5:5, f6:5, fa:28, ccc:20, sa:49, total:97},
       {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
       {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
     ]},
-
-  // CLASS 7TH TOPPER
-  {class:"7th", roll:3, name:"ARBEENA JAVID", father:"JAVID AHMAD GANAIE", mother:"AARIFA BEGUM", dob:"21-07-2015", gender:"Female", session:"2026-27", admNo:"153", marksObt:991, marksMax:1000, pct:"99.10%", grade:"A+", result:"PASSED", remarks:"Passed – 1st Position", conduct:"Good", promoted:"8th", date:"29-10-2026",
+  {class:"8th", roll:3, name:"MOHAMMAD AZAN GANAIE", father:"MOHAMMAD ASHRAF GANAIE", mother:"ULFATH BEGUM", dob:"10-07-2014", gender:"Male", session:"2026-27", admNo:"140", marksObt:700, marksMax:900, pct:"77.78%", grade:"B", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
     subjects:[
-      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:4, f5:5, f6:5, fa:29, ccc:20, sa:47, total:96},
+      {name:"ENGLISH", f1:5, f2:5, f3:3, f4:2, f5:4, f6:5, fa:24, ccc:17, sa:32, total:73},
+      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:18, sa:41, total:89},
+      {name:"KASHMIRI", f1:5, f2:5, f3:4, f4:4, f5:4, f6:5, fa:27, ccc:19, sa:43, total:89},
+      {name:"MATHEMATICS", f1:4, f2:5, f3:4, f4:4, f5:4, f6:5, fa:26, ccc:19, sa:32, total:77},
+      {name:"SCIENCE", f1:2, f2:3, f3:2, f4:3, f5:3, f6:3, fa:16, ccc:19, sa:26, total:61},
+      {name:"SOCIAL SCIENCE / EVS", f1:3, f2:3, f3:3, f4:3, f5:3, f6:3, fa:18, ccc:19, sa:28, total:65},
+      {name:"COMPUTER", f1:4, f2:5, f3:2, f4:3, f5:5, f6:5, fa:24, ccc:18, sa:42, total:84},
+      {name:"ETHICS / ISLAMIYAT", f1:4, f2:4, f3:3, f4:3, f5:4, f6:5, fa:23, ccc:18, sa:38, total:79},
+      {name:"AL-QURAN", f1:4, f2:4, f3:4, f4:4, f5:4, f6:4, fa:24, ccc:19, sa:40, total:83}
+    ]},
+  {class:"8th", roll:4, name:"JUNAID AHMAD DAR", father:"JAVID AHMAD DAR", mother:"AASIYA BEGUM", dob:"10-07-2014", gender:"Male", session:"2026-27", admNo:"141", marksObt:642, marksMax:900, pct:"71.33%", grade:"B", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:4, f2:4, f3:2, f4:3, f5:2, f6:3, fa:18, ccc:19, sa:24, total:61},
+      {name:"URDU", f1:5, f2:5, f3:4, f4:4, f5:4, f6:5, fa:27, ccc:19, sa:35, total:81},
+      {name:"KASHMIRI", f1:4, f2:4, f3:4, f4:4, f5:4, f6:4, fa:24, ccc:18, sa:34, total:76},
+      {name:"MATHEMATICS", f1:5, f2:5, f3:3, f4:3, f5:4, f6:5, fa:25, ccc:19, sa:29, total:73},
+      {name:"SCIENCE", f1:2, f2:3, f3:2, f4:2, f5:2, f6:3, fa:14, ccc:19, sa:24, total:57},
+      {name:"SOCIAL SCIENCE / EVS", f1:4, f2:4, f3:2, f4:2, f5:2, f6:2, fa:16, ccc:19, sa:25, total:60},
+      {name:"COMPUTER", f1:3, f2:4, f3:2, f4:2, f5:4, f6:4, fa:19, ccc:18, sa:36, total:73},
+      {name:"ETHICS / ISLAMIYAT", f1:3, f2:4, f3:3, f4:3, f5:4, f6:4, fa:21, ccc:18, sa:31, total:70},
+      {name:"AL-QURAN", f1:4, f2:5, f3:4, f4:5, f5:4, f6:5, fa:27, ccc:19, sa:45, total:91}
+    ]},
+  {class:"8th", roll:5, name:"HAFSA GULZAR", father:"GULZAR AHMAD GANAIE", mother:"MAYMOONA BEGUM", dob:"10-07-2014", gender:"Female", session:"2026-27", admNo:"142", marksObt:868, marksMax:900, pct:"96.44%", grade:"A+", result:"PASSED", remarks:"Passed – 3rd Position", conduct:"Good", promoted:"9th", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:41, total:91},
       {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
       {name:"KASHMIRI", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"SCIENCE", f1:4, f2:5, f3:4, f4:5, f5:5, f6:5, fa:28, ccc:20, sa:50, total:98},
-      {name:"SOCIAL SCIENCE / EVS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:48, total:98},
-      {name:"ARABIC", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
-      {name:"COMPUTER", f1:4, f2:5, f3:5, f4:5, f5:5, f6:5, fa:29, ccc:20, sa:50, total:99},
+      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:46, total:96},
+      {name:"SCIENCE", f1:5, f2:5, f3:3, f4:3, f5:5, f6:5, fa:26, ccc:20, sa:42, total:88},
+      {name:"SOCIAL SCIENCE / EVS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:47, total:97},
+      {name:"COMPUTER", f1:4, f2:5, f3:4, f4:5, f5:5, f6:5, fa:28, ccc:20, sa:48, total:96},
       {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
       {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
     ]},
-
-  // CLASS 8TH TOPPER
   {class:"8th", roll:6, name:"ADNAN FAYAZ", father:"FAYAZ AHMAD WANI", mother:"YASMEENA BEGUM", dob:"30-06-2014", gender:"Male", session:"2026-27", admNo:"143", marksObt:884, marksMax:900, pct:"98.22%", grade:"A+", result:"PASSED", remarks:"Passed – 1st Position", conduct:"Good", promoted:"9th", date:"29-10-2026",
     subjects:[
       {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:49, total:99},
@@ -643,26 +73,133 @@ const STUDENTS = [
       {name:"COMPUTER", f1:4, f2:5, f3:5, f4:5, f5:5, f6:5, fa:29, ccc:20, sa:47, total:96},
       {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
       {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
+    ]},
+  {class:"8th", roll:7, name:"SUHAIB MOHSIN", father:"MOHSIN HASSAN WANI", mother:"MAQSOODA BEGUM", dob:"10-07-2014", gender:"Male", session:"2026-27", admNo:"144", marksObt:631, marksMax:900, pct:"70.11%", grade:"B", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:3, f2:3, f3:2, f4:3, f5:4, f6:3, fa:18, ccc:20, sa:25, total:63},
+      {name:"URDU", f1:4, f2:4, f3:4, f4:4, f5:3, f6:4, fa:23, ccc:20, sa:25, total:68},
+      {name:"KASHMIRI", f1:4, f2:5, f3:3, f4:4, f5:3, f6:3, fa:22, ccc:20, sa:30, total:72},
+      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:32, total:82},
+      {name:"SCIENCE", f1:2, f2:3, f3:2, f4:2, f5:2, f6:3, fa:14, ccc:20, sa:23, total:57},
+      {name:"SOCIAL SCIENCE / EVS", f1:2, f2:3, f3:2, f4:3, f5:2, f6:2, fa:14, ccc:20, sa:24, total:58},
+      {name:"COMPUTER", f1:4, f2:5, f3:2, f4:2, f5:3, f6:3, fa:19, ccc:20, sa:35, total:74},
+      {name:"ETHICS / ISLAMIYAT", f1:3, f2:3, f3:2, f4:3, f5:2, f6:3, fa:16, ccc:20, sa:30, total:66},
+      {name:"AL-QURAN", f1:4, f2:5, f3:4, f4:5, f5:4, f6:4, fa:26, ccc:20, sa:45, total:91}
+    ]},
+  {class:"8th", roll:8, name:"TAHMEED TARIQ", father:"TARIQ AHMAD DAR", mother:"SHAHZADA", dob:"10-07-2014", gender:"Male", session:"2026-27", admNo:"145", marksObt:710, marksMax:900, pct:"78.89%", grade:"B", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:4, f2:5, f3:3, f4:3, f5:4, f6:4, fa:23, ccc:18, sa:26, total:67},
+      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:19, sa:44, total:93},
+      {name:"KASHMIRI", f1:5, f2:5, f3:4, f4:5, f5:4, f6:5, fa:28, ccc:18, sa:47, total:93},
+      {name:"MATHEMATICS", f1:4, f2:5, f3:3, f4:4, f5:4, f6:5, fa:25, ccc:19, sa:30, total:74},
+      {name:"SCIENCE", f1:2, f2:2, f3:2, f4:3, f5:2, f6:3, fa:14, ccc:19, sa:32, total:65},
+      {name:"SOCIAL SCIENCE / EVS", f1:3, f2:3, f3:3, f4:3, f5:2, f6:3, fa:17, ccc:19, sa:23, total:59},
+      {name:"COMPUTER", f1:4, f2:4, f3:3, f4:3, f5:4, f6:5, fa:23, ccc:19, sa:43, total:85},
+      {name:"ETHICS / ISLAMIYAT", f1:3, f2:4, f3:3, f4:3, f5:4, f6:4, fa:21, ccc:19, sa:44, total:84},
+      {name:"AL-QURAN", f1:4, f2:4, f3:4, f4:4, f5:4, f6:4, fa:24, ccc:19, sa:47, total:90}
+    ]},
+  {class:"8th", roll:9, name:"ARFAAT AASHIQ GANAIE", father:"AASHIQ RASHID GANAIE", mother:"FIRDOUSA BEGUM", dob:"10-07-2014", gender:"Male", session:"2026-27", admNo:"146", marksObt:868, marksMax:900, pct:"96.44%", grade:"A+", result:"PASSED", remarks:"Passed – 3rd Position", conduct:"Good", promoted:"9th", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:39, total:89},
+      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"KASHMIRI", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"SCIENCE", f1:5, f2:5, f3:4, f4:5, f5:4, f6:5, fa:28, ccc:20, sa:38, total:86},
+      {name:"SOCIAL SCIENCE / EVS", f1:4, f2:5, f3:5, f4:5, f5:5, f6:5, fa:29, ccc:20, sa:45, total:94},
+      {name:"COMPUTER", f1:4, f2:5, f3:5, f4:5, f5:5, f6:5, fa:29, ccc:20, sa:50, total:99},
+      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100}
+    ]},
+  {class:"8th", roll:10, name:"HAZIM AIJAZ", father:"AIJAZ AHMAD MIR", mother:"IRSHADA BEGUM", dob:"07-08-2014", gender:"Male", session:"2026-27", admNo:"147", marksObt:854, marksMax:900, pct:"94.89%", grade:"A+", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:5, f2:5, f3:4, f4:4, f5:5, f6:5, fa:28, ccc:20, sa:45, total:93},
+      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:48, total:98},
+      {name:"KASHMIRI", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:49, total:99},
+      {name:"SCIENCE", f1:3, f2:3, f3:4, f4:5, f5:3, f6:3, fa:21, ccc:20, sa:37, total:78},
+      {name:"SOCIAL SCIENCE / EVS", f1:4, f2:5, f3:5, f4:5, f5:5, f6:5, fa:29, ccc:20, sa:46, total:95},
+      {name:"COMPUTER", f1:4, f2:5, f3:4, f4:4, f5:5, f6:5, fa:27, ccc:20, sa:46, total:93},
+      {name:"ETHICS / ISLAMIYAT", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:50, total:100},
+      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:20, sa:48, total:98}
+    ]},
+  {class:"8th", roll:11, name:"SADIYA FAROOQ", father:"FAROOQ AHMAD WANI", mother:"LATEEFA BEGUM", dob:"11-07-2014", gender:"Female", session:"2026-27", admNo:"148", marksObt:783, marksMax:900, pct:"87.00%", grade:"A", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:5, f2:5, f3:5, f4:4, f5:5, f6:5, fa:29, ccc:19, sa:34, total:82},
+      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:19, sa:50, total:99},
+      {name:"KASHMIRI", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:18, sa:50, total:98},
+      {name:"MATHEMATICS", f1:4, f2:5, f3:5, f4:5, f5:5, f6:5, fa:29, ccc:18, sa:30, total:77},
+      {name:"SCIENCE", f1:3, f2:3, f3:3, f4:3, f5:3, f6:3, fa:18, ccc:19, sa:34, total:71},
+      {name:"SOCIAL SCIENCE / EVS", f1:4, f2:5, f3:3, f4:3, f5:5, f6:5, fa:25, ccc:19, sa:38, total:82},
+      {name:"COMPUTER", f1:4, f2:4, f3:3, f4:4, f5:4, f6:5, fa:24, ccc:18, sa:42, total:84},
+      {name:"ETHICS / ISLAMIYAT", f1:4, f2:5, f3:4, f4:4, f5:5, f6:5, fa:27, ccc:19, sa:50, total:96},
+      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:19, sa:45, total:94}
+    ]},
+  {class:"8th", roll:12, name:"SABIQ AHMAD WANI", father:"SAMEER AHMAD WANI", mother:"ASIYA AKHTER", dob:"28-04-2012", gender:"Male", session:"2026-27", admNo:"149", marksObt:805, marksMax:900, pct:"89.44%", grade:"A", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:5, f2:5, f4:4, f3:4, f5:5, f6:5, fa:28, ccc:19, sa:35, total:82},
+      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:19, sa:50, total:99},
+      {name:"KASHMIRI", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:19, sa:50, total:99},
+      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:19, sa:31, total:80},
+      {name:"SCIENCE", f1:3, f2:3, f3:3, f4:3, f5:4, f6:4, fa:20, ccc:18, sa:41, total:79},
+      {name:"SOCIAL SCIENCE / EVS", f1:4, f2:4, f3:4, f4:4, f5:4, f6:4, fa:24, ccc:19, sa:42, total:85},
+      {name:"COMPUTER", f1:5, f2:5, f3:3, f4:4, f5:4, f6:5, fa:26, ccc:18, sa:45, total:89},
+      {name:"ETHICS / ISLAMIYAT", f1:4, f2:5, f3:4, f4:5, f5:5, f6:5, fa:28, ccc:19, sa:49, total:96},
+      {name:"AL-QURAN", f1:4, f2:5, f3:5, f4:5, f5:5, f6:5, fa:29, ccc:19, sa:48, total:96}
+    ]},
+  {class:"8th", roll:13, name:"TABASUM BASHIR", father:"BASHIR AHMAD HAJAM", mother:"MEHBOOBA BEGUM", dob:"26-07-2013", gender:"Female", session:"2026-27", admNo:"150", marksObt:809, marksMax:900, pct:"89.89%", grade:"A", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"9th", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:4, f2:4, f3:5, f4:4, f5:5, f6:5, fa:27, ccc:19, sa:40, total:86},
+      {name:"URDU", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:19, sa:50, total:99},
+      {name:"KASHMIRI", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:19, sa:50, total:99},
+      {name:"MATHEMATICS", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:18, sa:44, total:92},
+      {name:"SCIENCE", f1:3, f2:3, f3:2, f4:2, f5:3, f6:4, fa:17, ccc:19, sa:38, total:74},
+      {name:"SOCIAL SCIENCE / EVS", f1:4, f2:5, f3:3, f4:4, f5:5, f6:5, fa:26, ccc:19, sa:35, total:80},
+      {name:"COMPUTER", f1:4, f2:4, f3:2, f4:3, f5:5, f6:5, fa:23, ccc:19, sa:42, total:84},
+      {name:"ETHICS / ISLAMIYAT", f1:4, f2:5, f3:5, f4:5, f5:5, f6:5, fa:29, ccc:18, sa:49, total:96},
+      {name:"AL-QURAN", f1:5, f2:5, f3:5, f4:5, f5:5, f6:5, fa:30, ccc:19, sa:50, total:99}
+    ]},
+
+  // --- NURSERY (Sample Set) ---
+  {class:"Nursery", roll:1, name:"MUZAMIL FAYAZ GANAIE", father:"FAYAZ AHMAD GANAIE", mother:"PARMEENA BANO", dob:"04-10-2022", gender:"Male", session:"2026-27", admNo:"422", marksObt:547, marksMax:600, pct:"91.17%", grade:"A+", result:"PASSED", remarks:"Passed", conduct:"Good", promoted:"LKG", date:"29-10-2026",
+    subjects:[
+      {name:"ENGLISH", f1:3, f2:4, f3:3, f4:4, f5:3, f6:4, fa:21, ccc:20, sa:50, total:91},
+      {name:"URDU", f1:4, f2:5, f3:4, f4:5, f5:3, f6:4, fa:25, ccc:20, sa:48, total:93},
+      {name:"MATHEMATICS", f1:4, f2:5, f3:5, f4:5, f5:4, f6:4, fa:27, ccc:20, sa:48, total:95},
+      {name:"SCIENCE", f1:4, f2:5, f3:4, f4:5, f5:4, f6:4, fa:26, ccc:20, sa:50, total:96},
+      {name:"ETHICS / ISLAMIYAT", f1:3, f2:3, f3:3, f4:3, f5:3, f6:3, fa:18, ccc:20, sa:45, total:83},
+      {name:"AL-QURAN", f1:3, f2:5, f3:3, f4:5, f5:2, f6:3, fa:21, ccc:20, sa:48, total:89}
     ]}
 ];
 
 let activeStudent = null;
 
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
 function handleLookup(e) {
   e.preventDefault();
-  const cls = document.getElementById("studentClass").value.trim();
+  
+  // Clean inputs
+  let cls = document.getElementById("studentClass").value.trim().toLowerCase();
+  cls = cls.replace(/^class\s*/i, ''); // handles "8th" or "Class 8th"
+  
   const roll = parseInt(document.getElementById("studentRoll").value.trim(), 10);
-  const nameQuery = document.getElementById("studentName").value.trim().toLowerCase();
+  const nameQuery = normalize(document.getElementById("studentName").value.trim());
+
   const msg = document.getElementById("statusMsg");
   const actionBar = document.getElementById("actionBar");
   const container = document.getElementById("reportCardContainer");
 
-  // Lookup matching student
-  const student = STUDENTS.find(s => 
-    s.class.toLowerCase() === cls.toLowerCase() &&
-    s.roll === roll &&
-    s.name.toLowerCase().includes(nameQuery)
-  );
+  // Search by roll and fuzzy matching on name
+  const student = STUDENTS.find(s => {
+    const sClass = s.class.toLowerCase().replace(/^class\s*/i, '');
+    const classMatch = (sClass === cls);
+    const rollMatch = (s.roll === roll);
+    const sName = normalize(s.name);
+    const nameMatch = sName.includes(nameQuery) || nameQuery.includes(sName);
+    return classMatch && rollMatch && nameMatch;
+  });
 
   if (!student) {
     msg.className = "msg-error";
@@ -693,7 +230,6 @@ function renderHPR(s) {
   const totalSA = s.subjects.reduce((acc, cur) => acc + (cur.sa || 0), 0);
 
   target.innerHTML = `
-    <!-- Header with Verified Logo -->
     <div class="hpr-header">
       <svg class="hpr-crest" viewBox="0 0 100 100" fill="none">
         <circle cx="50" cy="50" r="48" fill="#0B1B3D" stroke="#C59B27" stroke-width="3"/>
@@ -709,7 +245,6 @@ function renderHPR(s) {
       <div style="width:70px"></div>
     </div>
 
-    <!-- Student Info Matrix -->
     <table class="hpr-meta-table">
       <tr>
         <td class="meta-lbl">STUDENT'S NAME:</td>
@@ -737,7 +272,6 @@ function renderHPR(s) {
       </tr>
     </table>
 
-    <!-- Academic Marks Matrix -->
     <table class="hpr-marks-table">
       <thead>
         <tr>
@@ -784,7 +318,6 @@ function renderHPR(s) {
       </tbody>
     </table>
 
-    <!-- Final Result Strip -->
     <table class="hpr-score-summary">
       <tr>
         <th>TOTAL MARKS</th>
@@ -811,7 +344,6 @@ function renderHPR(s) {
       <strong>GRADING SCALE:</strong> A+: 90% & above &bull; A: 80–89% &bull; B: 70–79% &bull; C: 60–69% &bull; D: 50–59% &bull; E: Below 50%
     </div>
 
-    <!-- Signatures and Official Stamp -->
     <div class="hpr-signatures">
       <div class="sig-block">
         <svg width="100" height="34" viewBox="0 0 100 34">
@@ -837,7 +369,6 @@ function renderHPR(s) {
   `;
 }
 
-// 1. PDF DOWNLOAD
 function downloadMarksCardPDF() {
   if (!activeStudent) return;
   const element = document.getElementById("hprSheet");
@@ -852,7 +383,6 @@ function downloadMarksCardPDF() {
   html2pdf().set(opt).from(element).save();
 }
 
-// 2. IMAGE (PNG) DOWNLOAD
 function downloadMarksCardImage() {
   if (!activeStudent) return;
   const element = document.getElementById("hprSheet");
@@ -866,6 +396,3 @@ function downloadMarksCardImage() {
   });
 }
 </script>
-
-</body>
-</html>
