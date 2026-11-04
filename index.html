@@ -10,46 +10,45 @@
 <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Cormorant+Garamond:wght@500;700&display=swap">
 <style>
-:root{--bg:#f7f4ec;--card:#ffffff;--ink:#14213d;--mute:#4a5570;--acc:#14264f;--gold:#c8a24a;--line:#dcd5c2;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1730;--card:#132245;--ink:#f3ead2;--mute:#b9bfd0;--acc:#e0b962;--gold:#e0b962;--line:#22345f;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0c1730;--card:#132245;--ink:#f3ead2;--mute:#b9bfd0;--acc:#e0b962;--gold:#e0b962;--line:#22345f;color-scheme:dark}
+:root{--bg:#f7f4ec;--card:#ffffff;--ink:#14213d;--mute:#4a5570;--oxford:#14264f;--gold:#c8a24a;--line:#dcd5c2;--h2:#14264f;--link:#14264f;--alt:#14264f;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1730;--card:#132245;--ink:#f3ead2;--mute:#b9bfd0;--oxford:#14264f;--gold:#e0b962;--line:#22345f;--h2:#e0b962;--link:#e0b962;--alt:#e0b962;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c1730;--card:#132245;--ink:#f3ead2;--mute:#b9bfd0;--oxford:#14264f;--gold:#e0b962;--line:#22345f;--h2:#e0b962;--link:#e0b962;--alt:#e0b962;color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Lora,Georgia,serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;line-height:1.15;margin:0 0 .5em}
 h1{font-size:clamp(2.4rem,8vw,4rem)}
-h2{font-size:2rem;color:var(--acc)}
+h2{font-size:2rem;color:var(--h2)}
 h3{font-size:1.35rem;color:var(--ink)}
-a{color:var(--gold)}
-header{position:sticky;top:0;z-index:20;background:var(--acc);border-bottom:2px solid var(--gold);padding:10px 16px}
+a{color:var(--link)}
+header{position:sticky;top:0;z-index:20;background:var(--oxford);border-bottom:2px solid var(--gold);padding:10px 16px}
 nav{display:flex;gap:6px;overflow-x:auto;max-width:1000px;margin:auto;align-items:center}
 nav b{font-family:"Cormorant Garamond",serif;font-size:1.3rem;white-space:nowrap;margin-right:8px;color:#fff}
-nav a{white-space:nowrap;text-decoration:none;color:#f3ead2;padding:4px 10px;border-radius:99px;font-size:.9rem}
-nav a:hover{background:rgba(200,162,74,.25)}
+nav a{white-space:nowrap;text-decoration:none;color:#fff;padding:4px 10px;border-radius:99px;font-size:.9rem}
+nav a:hover{background:rgba(200,162,74,.3)}
 nav a.marks{font-weight:bold;color:var(--gold);border:1px solid var(--gold)}
 section{max-width:1000px;margin:auto;padding:56px 18px 8px}
 .herow{background:linear-gradient(rgba(12,23,48,.55),rgba(12,23,48,.8)),url(./hero.jpg) center/cover no-repeat,#14264f}
 .hero{padding:64px 18px;text-align:center;color:#fff}
 .hero h1{color:#fff}
 .hero p{max-width:600px;margin:0 auto 1.2em;opacity:.92}
-.tag{display:inline-block;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.btn{display:inline-block;background:var(--gold);color:#14264f;border:0;padding:10px 20px;border-radius:8px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer;margin:4px}
-.btn.alt{background:transparent;color:var(--gold);border:1px solid var(--gold)}
-.hero .btn{background:var(--gold);color:#14264f}
+.tag{display:inline-block;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#e0b962;margin-bottom:10px}
+.btn{display:inline-block;background:var(--gold);color:var(--oxford);border:0;padding:10px 20px;border-radius:8px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer;margin:4px}
+.btn.alt{background:transparent;color:var(--alt);border:1px solid var(--gold)}
+.hero .btn{background:#c8a24a;color:#14264f}
 .hero .btn.alt{background:transparent;color:#fff;border:1px solid #fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
 .card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:12px;padding:18px}
 .card p{margin:.3em 0 .8em;color:var(--mute);font-size:.95rem}
-.chip{font-size:.75rem;background:var(--acc);color:#f3ead2;padding:2px 10px;border-radius:99px;display:inline-block;margin-bottom:6px}
+.chip{font-size:.75rem;background:var(--gold);color:var(--oxford);font-weight:600;padding:2px 10px;border-radius:99px;display:inline-block;margin-bottom:6px}
 .cover{height:110px;border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:#f3ead2;font-family:"Cormorant Garamond",serif;font-size:1.3rem;text-align:center;padding:8px;background:linear-gradient(135deg,#14264f,#0a1733);border:1px solid var(--gold)}
-.cover.g{background:linear-gradient(135deg,#c8a24a,#8a6a24);color:#14264f}
 .cover.b{background:linear-gradient(135deg,#243b6e,#14264f)}
 .book-img{display:block;width:100%;max-width:220px;height:auto;margin:0 auto 14px;border-radius:6px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
 .feat{grid-column:1/-1}
 .feat ol{margin:8px 0 0;padding-left:20px;font-size:.95rem}
 .feat li{margin:8px 0}
 .feat li span{color:var(--mute)}
-details summary{cursor:pointer;color:var(--gold);margin-top:10px}
+details summary{cursor:pointer;color:var(--link);margin-top:10px}
 footer{max-width:1000px;margin:56px auto 0;padding:24px 18px calc(24px + env(safe-area-inset-bottom,0px));border-top:2px solid var(--gold);color:var(--mute);font-size:.9rem;text-align:center}
 form.row{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:10px}
 input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit}
@@ -75,6 +74,7 @@ input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radiu
 <h1>The Monotheist</h1>
 <p>Student striving to revive moral, ethical and humanitarian values.</p>
 <a class="btn" href="#books">Explore my books</a>
+<a class="btn" href="results.html">View Marks Card</a>
 <a class="btn alt" href="#contact">Contact me</a>
 </section>
 </div>
@@ -112,14 +112,6 @@ input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radiu
 </div>
 
 <div class="card">
-<div class="cover g">The Monotheist</div>
-<span class="chip">Philosophy · 48 chapters</span>
-<h3>The Monotheist</h3>
-<p>A chapter-by-chapter exploration of big questions, written for thoughtful readers.</p>
-<a href="#contact">Enquire</a>
-</div>
-
-<div class="card">
 <div class="cover b">Computer Series, Class 1–9</div>
 <span class="chip">Practical series</span>
 <h3>Primary Computer Series</h3>
@@ -141,6 +133,11 @@ input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radiu
 <section id="projects">
 <h2>Projects</h2>
 <div class="grid">
+<div class="card">
+<h3>Marks Card</h3>
+<p>Students can view and print their marks cards by entering their roll number and name.</p>
+<a class="btn" href="results.html">Open Marks Card</a>
+</div>
 <div class="card">
 <h3>The Monotheist Library</h3>
 <p>A growing library of books, notes and records for readers and students.</p>
