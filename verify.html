@@ -3,544 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Monotheist - Certificate Verification Portal</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Certificate Verification Portal - The Monotheist</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- QR Code Library for rendering live verification QR -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- HTML2Canvas & jsPDF for PDF export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0f7ff',
-                            100: '#e0effe',
-                            600: '#1e40af',
-                            700: '#1d4ed8',
-                            800: '#1e3a8a',
-                            900: '#0f172a',
-                        },
-                        gold: {
-                            400: '#fbbf24',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                            700: '#b45309'
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['Georgia', 'Cambria', 'serif']
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@300;400;500;600;700&family=Pinyon+Script&display=swap');
-        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .font-cinzel { font-family: 'Cinzel', serif; }
-        .font-cursive { font-family: 'Pinyon Script', cursive; }
-        
-        /* Print styles */
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            #printable-certificate, #printable-certificate * {
-                visibility: visible;
-            }
-            #printable-certificate {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                margin: 0;
-                padding: 0;
-                box-shadow: none !important;
-                border: none !important;
-            }
-            .no-print {
-                display: none !important;
-            }
-        }
-
-        /* Certificate Border Frame */
-        .certificate-border {
-            border: 12px double #b45309;
-            box-shadow: inset 0 0 0 3px #fef3c7;
+            body * { visibility: hidden; }
+            #printable-certificate, #printable-certificate * { visibility: visible; }
+            #printable-certificate { position: absolute; left: 0; top: 0; width: 100%; margin: 0; box-shadow: none; }
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen font-sans flex flex-col justify-between antialiased">
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
 
-            <a href="https://github.com/mehrajwani771/themonothiest" target="_blank" rel="noopener noreferrer" class="text-xs sm:text-sm text-slate-400 hover:text-white flex items-center gap-2 bg-slate-800/60 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition-all">
-                <i data-lucide="github" class="w-4 h-4"></i>
-                <span>GitHub Repository</span>
-            </a>
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-950/60 backdrop-blur sticky top-0 z-30">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div>
+                <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">The Monotheist</span>
+                <h1 class="text-lg font-cinzel font-bold text-white tracking-wide">Certificate Verification Portal</h1>
+            </div>
+            <a href="index.html" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-lg transition">Back to Home</a>
         </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-        
-        <!-- Search Section -->
-        <div id="search-section" class="max-w-2xl mx-auto space-y-8 no-print">
-            <div class="text-center space-y-3">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Authentic Academic Verification
-                </span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold font-cinzel tracking-tight text-white">Verify Certificate Credentials</h2>
-                <p class="text-slate-400 text-sm sm:text-base">
-                    Enter student name and roll number or certificate ID below to validate certificates issued by <strong class="text-amber-400">The Monotheist</strong>.
-                </p>
-            </div>
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-4 py-12 flex-grow w-full">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-cinzel font-bold text-white mb-2">Verify Student Achievement</h2>
+            <p class="text-slate-400 text-sm">Enter student details or certificate ID to instantly inspect and verify credentials.</p>
+        </div>
 
-            <!-- Search Card Form -->
-            <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-                <div class="absolute -right-16 -top-16 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                
-                <form id="verification-form" onsubmit="handleVerification(event)" class="space-y-5">
-                    <div>
-                        <label for="student-name" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                            Student Name <span class="text-slate-500 font-normal">(Optional if Roll / Cert ID provided)</span>
-                        </label>
-                        <div class="relative">
-                            <i data-lucide="user" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                            <input 
-                                type="text" 
-                                id="student-name" 
-                                placeholder="e.g. Seerat Lateef"
-                                class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-11 pr-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all text-sm"
-                            >
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="roll-no" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                                Roll Number
-                            </label>
-                            <div class="relative">
-                                <i data-lucide="hash" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                <input 
-                                    type="text" 
-                                    id="roll-no" 
-                                    placeholder="e.g. 1"
-                                    class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-11 pr-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all text-sm"
-                                >
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="cert-no" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                                Certificate Number
-                            </label>
-                            <div class="relative">
-                                <i data-lucide="file-badge" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                <input 
-                                    type="text" 
-                                    id="cert-no" 
-                                    placeholder="e.g. TM-8-2026-001"
-                                    class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-11 pr-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all text-sm"
-                                >
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pt-2">
-                        <button 
-                            type="submit" 
-                            class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all flex items-center justify-center space-x-2 text-sm uppercase tracking-wider"
-                        >
-                            <i data-lucide="search" class="w-4 h-4"></i>
-                            <span>Verify Record</span>
-                        </button>
-                    </div>
-                </form>
-
-                <!-- Status Feedback Message -->
-                <div id="error-message" class="hidden mt-4 p-4 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-400 text-sm flex items-center space-x-3">
-                    <i data-lucide="alert-circle" class="w-5 h-5 flex-shrink-0"></i>
-                    <span id="error-text">No record found matching the criteria. Please check details and try again.</span>
+        <!-- Search Box Card -->
+        <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 shadow-xl backdrop-blur mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Student Name</label>
+                    <input type="text" id="searchName" placeholder="e.g. Seerat Lateef" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Roll Number / ID</label>
+                    <input type="text" id="searchRoll" placeholder="e.g. 1 or TM-8-2026-001" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition">
                 </div>
             </div>
-
-            <!-- Quick Directory Helper -->
-            <div class="bg-slate-800/40 border border-slate-800 rounded-2xl p-5 backdrop-blur-sm">
-                <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center justify-between">
-                    <span>Class 8th Enrolled Batch (All 13 Certificates)</span>
-                    <span class="text-amber-400 font-mono text-[11px]">Issue Date: 07-Nov-2026</span>
-                </h3>
-                <div class="flex flex-wrap gap-2" id="quick-buttons">
-                    <!-- Dynamic quick buttons will load here -->
-                </div>
-            </div>
-
-            <!-- GitHub Pages Deployment Guide Box -->
-            <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-6 text-left space-y-3">
-                <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
-                    <i data-lucide="info" class="w-4 h-4"></i> Instructions for GitHub Pages
-                </h3>
-                <p class="text-xs text-slate-400 leading-relaxed">
-                    To make this active on your website <code class="bg-slate-900 px-1.5 py-0.5 rounded text-slate-300 font-mono">mehrajwani771.github.io/themonothiest/</code>:
-                </p>
-                <ol class="list-decimal list-inside text-xs text-slate-400 space-y-1.5">
-                    <li>Save the complete code above into a file named <strong class="text-slate-200">index.html</strong>.</li>
-                    <li>Upload or commit <code class="bg-slate-900 px-1.5 py-0.5 rounded text-slate-300 font-mono">index.html</code> into your GitHub repository root or the <code class="bg-slate-900 px-1.5 py-0.5 rounded text-slate-300 font-mono">themonothiest</code> folder.</li>
-                    <li>Ensure GitHub Pages is enabled in your repository settings (branch: main / root).</li>
-                </ol>
+            <div class="flex gap-3">
+                <button onclick="verifyCertificate()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-amber-500/10">Verify Certificate</button>
+                <button onclick="clearSearch()" class="bg-slate-700 hover:bg-slate-600 text-slate-300 font-medium py-3 px-5 rounded-xl transition">Clear</button>
             </div>
         </div>
 
-        <!-- Verification Result & Certificate View (Hidden by default) -->
-        <div id="result-section" class="hidden space-y-8 max-w-4xl mx-auto">
-            
-            <!-- Verification Alert Banner -->
-            <div class="no-print bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="check-circle-2" class="w-7 h-7"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 class="text-lg font-bold text-white">Certificate Authenticity Verified</h3>
-                            <span class="bg-emerald-500/20 text-emerald-300 text-xs px-2.5 py-0.5 rounded-full font-semibold border border-emerald-500/30 uppercase tracking-wider">Valid</span>
-                        </div>
-                        <p class="text-xs sm:text-sm text-slate-300">Official database record confirmed for <span id="res-student-name" class="font-bold text-amber-400"></span>.</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button onclick="resetForm()" class="flex-1 sm:flex-none px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold border border-slate-700 transition-all flex items-center justify-center gap-2">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Search Another
-                    </button>
-                    <button onclick="printCertificate()" class="flex-1 sm:flex-none px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs transition-all shadow-md shadow-amber-500/10 flex items-center justify-center gap-2">
-                        <i data-lucide="printer" class="w-4 h-4"></i> Print / Save PDF
-                    </button>
-                </div>
-            </div>
-
-            <!-- Detailed Meta Info Grid -->
-            <div class="no-print grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl">
-                    <span class="text-[11px] text-slate-400 uppercase tracking-wider block mb-1">Student Name</span>
-                    <span id="meta-name" class="font-bold text-white text-sm"></span>
-                </div>
-                <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl">
-                    <span class="text-[11px] text-slate-400 uppercase tracking-wider block mb-1">Roll & Class</span>
-                    <span id="meta-roll" class="font-bold text-amber-400 text-sm"></span>
-                </div>
-                <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl">
-                    <span class="text-[11px] text-slate-400 uppercase tracking-wider block mb-1">Certificate No.</span>
-                    <span id="meta-cert" class="font-mono font-bold text-slate-200 text-sm"></span>
-                </div>
-                <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl">
-                    <span class="text-[11px] text-slate-400 uppercase tracking-wider block mb-1">Issue Date</span>
-                    <span id="meta-date" class="font-bold text-slate-200 text-sm">07-Nov-2026</span>
-                </div>
-            </div>
-
-            <!-- Certificate Visual Display (Rendered exactly to replicate official issue format) -->
-            <div class="flex justify-center">
-                <div id="printable-certificate" class="w-full bg-amber-50 text-slate-900 rounded-xl p-6 sm:p-10 certificate-border relative overflow-hidden shadow-2xl font-sans" style="max-width: 840px;">
-                    
-                    <!-- Decorative Background Watermark Pattern -->
-                    <div class="absolute inset-0 opacity-[0.03] pointer-events-none flex items-center justify-center">
-                        <i data-lucide="award" class="w-96 h-96 text-slate-900"></i>
-                    </div>
-
-                    <!-- Header Seal & Institution Title -->
-                    <div class="text-center space-y-2 relative z-10">
-                        <div class="flex justify-center mb-1">
-                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-600 to-amber-800 p-1 shadow-md">
-                                <div class="w-full h-full bg-amber-50 rounded-full border-2 border-amber-300 flex items-center justify-center">
-                                    <i data-lucide="award" class="w-9 h-9 text-amber-700"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-black font-cinzel tracking-widest text-slate-900">THE MONOTHEIST</h2>
-                        <div class="inline-block bg-amber-600 text-amber-50 text-xs font-bold font-cinzel px-4 py-1 rounded-full uppercase tracking-widest">
-                            Certificate of Appreciation
-                        </div>
-                    </div>
-
-                    <!-- Presentation Text -->
-                    <div class="text-center my-6 relative z-10 space-y-2">
-                        <p class="text-xs sm:text-sm italic text-slate-600 font-serif">This certificate is proudly presented to</p>
-                        <h3 id="cert-display-name" class="text-2xl sm:text-4xl font-extrabold font-cinzel text-amber-800 border-b-2 border-amber-300/80 inline-block px-8 py-1">
-                            Seerat Lateef
-                        </h3>
-                        <p id="cert-display-class" class="text-xs sm:text-sm font-bold font-cinzel text-slate-700 tracking-wider pt-1">
-                            CLASS 8TH
-                        </p>
-                        <p class="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto pt-2 leading-relaxed">
-                            in recognition of sincere effort, curiosity and steady progress in the Computer course, for developing practical skills in:
-                        </p>
-                    </div>
-
-                    <!-- Course Curriculum Modules Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-6 relative z-10 text-left">
-                        <div class="bg-amber-100/60 border border-amber-200/80 p-3 rounded-lg flex items-start space-x-3">
-                            <div class="bg-amber-600 text-amber-50 p-2 rounded-md mt-0.5">
-                                <i data-lucide="bot" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold uppercase text-slate-900 tracking-wide">Prompt Engineering <span class="text-[10px] text-amber-700 font-semibold">(AI)</span></h4>
-                                <p class="text-[11px] text-slate-600 leading-tight mt-0.5">Writing clear, well-structured prompts to get accurate and useful results from AI tools.</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-amber-100/60 border border-amber-200/80 p-3 rounded-lg flex items-start space-x-3">
-                            <div class="bg-amber-600 text-amber-50 p-2 rounded-md mt-0.5">
-                                <i data-lucide="globe" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold uppercase text-slate-900 tracking-wide">Internet Fundamentals <span class="text-[10px] text-amber-700 font-semibold">(Digital Literacy)</span></h4>
-                                <p class="text-[11px] text-slate-600 leading-tight mt-0.5">Navigating the web, searching for information effectively and communicating online.</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-amber-100/60 border border-amber-200/80 p-3 rounded-lg flex items-start space-x-3">
-                            <div class="bg-amber-600 text-amber-50 p-2 rounded-md mt-0.5">
-                                <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold uppercase text-slate-900 tracking-wide">Google Workspace <span class="text-[10px] text-amber-700 font-semibold">(Forms, Sheets, Docs)</span></h4>
-                                <p class="text-[11px] text-slate-600 leading-tight mt-0.5">Building online forms, organising and analysing data, and creating collaborative documents.</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-amber-100/60 border border-amber-200/80 p-3 rounded-lg flex items-start space-x-3">
-                            <div class="bg-amber-600 text-amber-50 p-2 rounded-md mt-0.5">
-                                <i data-lucide="file-text" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold uppercase text-slate-900 tracking-wide">Microsoft Office <span class="text-[10px] text-amber-700 font-semibold">(Word, Excel, PPT)</span></h4>
-                                <p class="text-[11px] text-slate-600 leading-tight mt-0.5">Formatting professional documents, working with formulas & data, and clear slides.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Encouraging Motto -->
-                    <div class="text-center text-xs font-serif italic text-amber-900 font-semibold relative z-10 mb-6">
-                        "Keep learning, keep creating, and keep asking great questions."
-                    </div>
-
-                    <!-- Footer Details: Dates, Signatures, QR Code -->
-                    <div class="border-t border-amber-300/70 pt-6 flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
-                        <!-- Date & Cert No -->
-                        <div class="text-center sm:text-left space-y-1">
-                            <div>
-                                <span class="text-[10px] text-slate-500 uppercase tracking-widest block font-bold">Date of Issue</span>
-                                <span class="text-xs font-bold text-slate-800">07-Nov-2026</span>
-                            </div>
-                            <div class="pt-1">
-                                <span class="text-[10px] text-slate-500 uppercase tracking-widest block font-bold">Certificate No.</span>
-                                <span id="cert-display-no" class="text-xs font-mono font-bold text-amber-800">TM-8-2026-001</span>
-                            </div>
-                        </div>
-
-                        <!-- Live Verification QR Box -->
-                        <div class="flex flex-col items-center">
-                            <div id="qrcode" class="p-1.5 bg-white rounded-lg border border-amber-300 shadow-sm"></div>
-                            <span class="text-[9px] uppercase tracking-widest text-slate-500 font-bold mt-1">Scan to Verify</span>
-                        </div>
-
-                        <!-- Instructor Signature Seal -->
-                        <div class="text-center sm:text-right space-y-1">
-                            <div class="h-10 flex items-center justify-center sm:justify-end">
-                                <span class="font-cursive text-3xl text-slate-900 font-bold">The Monotheist</span>
-                            </div>
-                            <div class="border-t border-slate-400 w-36 mx-auto sm:ml-auto sm:mr-0 pt-0.5">
-                                <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold block">Instructor / Authority</span>
-                                <span class="text-[10px] font-bold text-amber-800">The Monotheist</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
+        <!-- Result Container -->
+        <div id="resultContainer" class="hidden"></div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-xs text-slate-500 no-print">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-                &copy; 2026 <strong class="text-slate-300">The Monotheist</strong>. All rights reserved.
-            </div>
-            <div class="flex items-center space-x-4">
-                <span class="inline-flex items-center gap-1 text-emerald-400">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Verification Service Online
-                </span>
-            </div>
-        </div>
+    <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+        &copy; 2026 The Monotheist &bull; Official Student Certification System
     </footer>
 
-    <!-- JavaScript Data Logic -->
     <script>
-        // Official Database of all 13 Class 8th Certificates
-        const certificateDatabase = [
-            { roll: 1,  certNo: "TM-8-2026-001", name: "Seerat Lateef",           class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 2,  certNo: "TM-8-2026-002", name: "Faisal Majeed",            class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 3,  certNo: "TM-8-2026-003", name: "Mohammad Azan Ganaie",     class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 4,  certNo: "TM-8-2026-004", name: "Junaid Ahmad Dar",         class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 5,  certNo: "TM-8-2026-005", name: "Hafsa Gulzar",             class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 6,  certNo: "TM-8-2026-006", name: "Adnan Fayaz Wani",         class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 7,  certNo: "TM-8-2026-007", name: "Suhaib Mohsin",            class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 8,  certNo: "TM-8-2026-008", name: "Tahmeed Tariq",            class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 9,  certNo: "TM-8-2026-009", name: "Arfaat Aashiq Ganaie",     class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 10, certNo: "TM-8-2026-010", name: "Hazim Aijaz",              class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 11, certNo: "TM-8-2026-011", name: "Sadiya Farooq",            class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 12, certNo: "TM-8-2026-012", name: "Sabiq Ahmad Wani",         class: "CLASS 8TH", date: "07-Nov-2026" },
-            { roll: 13, certNo: "TM-8-2026-013", name: "Tabasum Bashir",           class: "CLASS 8TH", date: "07-Nov-2026" }
+        // Complete dataset of all 13 certified students
+        const students = [
+            { roll: "1", name: "Seerat Lateef", certNo: "TM-8-2026-001", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "2", name: "Faisal Majeed", certNo: "TM-8-2026-002", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "3", name: "Mohammad Azan Ganaie", certNo: "TM-8-2026-003", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "4", name: "Junaid Ahmad Dar", certNo: "TM-8-2026-004", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "5", name: "Hafsa Gulzar", certNo: "TM-8-2026-005", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "6", name: "Adnan Fayaz Wani", certNo: "TM-8-2026-006", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "7", name: "Suhaib Mohsin", certNo: "TM-8-2026-007", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "8", name: "Tahmeed Tariq", certNo: "TM-8-2026-008", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "9", name: "Arfaat Aashiq Ganaie", certNo: "TM-8-2026-009", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "10", name: "Hazim Aijaz", certNo: "TM-8-2026-010", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "11", name: "Sadiya Farooq", certNo: "TM-8-2026-011", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "12", name: "Sabiq Ahmad Wani", certNo: "TM-8-2026-012", issueDate: "07-Nov-2026", class: "Class 8th" },
+            { roll: "13", name: "Tabasum Bashir", certNo: "TM-8-2026-013", issueDate: "07-Nov-2026", class: "Class 8th" }
         ];
 
-        let qrcodeInstance = null;
+        // Auto-detect URL query params on page load (e.g. ?id=TM-8-2026-001 or ?roll=1)
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const idParam = urlParams.get('id');
+            const rollParam = urlParams.get('roll');
+            const nameParam = urlParams.get('name');
 
-        // Initialize Lucide icons and page components
-        document.addEventListener("DOMContentLoaded", () => {
-            lucide.createIcons();
-            renderQuickButtons();
-            checkUrlParameters();
+            if (idParam) {
+                document.getElementById('searchRoll').value = idParam;
+                verifyCertificate();
+            } else if (rollParam) {
+                document.getElementById('searchRoll').value = rollParam;
+                verifyCertificate();
+            } else if (nameParam) {
+                document.getElementById('searchName').value = nameParam;
+                verifyCertificate();
+            }
         });
 
-        // Render quick buttons for instant testing of all 13 students
-        function renderQuickButtons() {
-            const container = document.getElementById("quick-buttons");
-            container.innerHTML = "";
-            certificateDatabase.forEach(student => {
-                const btn = document.createElement("button");
-                btn.className = "text-xs bg-slate-900/90 hover:bg-amber-500/20 text-slate-300 hover:text-amber-300 px-2.5 py-1 rounded-lg border border-slate-700/60 transition-all font-medium flex items-center gap-1.5";
-                btn.innerHTML = `<span class="text-amber-400 font-mono">#${student.roll}</span> ${student.name.split(' ')[0]}`;
-                btn.onclick = () => loadRecord(student);
-                container.appendChild(btn);
-            });
-        }
+        function verifyCertificate() {
+            const nameQuery = document.getElementById('searchName').value.trim().toLowerCase();
+            const rollQuery = document.getElementById('searchRoll').value.trim().toLowerCase();
+            const container = document.getElementById('resultContainer');
 
-        // Auto-check URL query parameters for QR code scanning (?id=TM-8-2026-001 or ?roll=1)
-        function checkUrlParameters() {
-            const params = new URLSearchParams(window.location.search);
-            const idParam = params.get('id') || params.get('cert') || params.get('certNo');
-            const rollParam = params.get('roll') || params.get('rollNo');
-            const nameParam = params.get('name');
-
-            if (idParam || rollParam || nameParam) {
-                const match = findStudent(nameParam, rollParam, idParam);
-                if (match) {
-                    loadRecord(match);
-                } else {
-                    showError("No record matching the scanned QR link parameters.");
-                }
-            }
-        }
-
-        // Search algorithm checking name, roll number, and certificate ID
-        function findStudent(nameQuery, rollQuery, certQuery) {
-            const cleanName = nameQuery ? nameQuery.trim().toLowerCase() : "";
-            const cleanRoll = rollQuery ? rollQuery.toString().trim().replace(/[^0-9]/g, "") : "";
-            const cleanCert = certQuery ? certQuery.trim().toLowerCase() : "";
-
-            return certificateDatabase.find(student => {
-                const matchCert = cleanCert && student.certNo.toLowerCase().includes(cleanCert);
-                const matchRoll = cleanRoll && student.roll.toString() === cleanRoll;
-                const matchName = cleanName && student.name.toLowerCase().includes(cleanName);
-
-                if (cleanName && cleanRoll) {
-                    return student.name.toLowerCase().includes(cleanName) && student.roll.toString() === cleanRoll;
-                }
-                return matchCert || matchRoll || matchName;
-            });
-        }
-
-        // Handle verification form submit
-        function handleVerification(e) {
-            e.preventDefault();
-            const nameInput = document.getElementById("student-name").value;
-            const rollInput = document.getElementById("roll-no").value;
-            const certInput = document.getElementById("cert-no").value;
-
-            if (!nameInput && !rollInput && !certInput) {
-                showError("Please enter student name, roll number, or certificate number.");
+            if (!nameQuery && !rollQuery) {
+                container.innerHTML = `
+                    <div class="bg-rose-500/10 border border-rose-500/30 rounded-2xl p-6 text-center text-rose-300">
+                        Please enter a student name or roll number/certificate ID.
+                    </div>`;
+                container.classList.remove('hidden');
                 return;
             }
 
-            const matchedStudent = findStudent(nameInput, rollInput, certInput);
-
-            if (matchedStudent) {
-                hideError();
-                loadRecord(matchedStudent);
-            } else {
-                showError("No matching record found. Please verify the student name and roll number.");
-            }
-        }
-
-        // Display validated student record
-        function loadRecord(student) {
-            document.getElementById("res-student-name").textContent = student.name;
-            document.getElementById("meta-name").textContent = student.name;
-            document.getElementById("meta-roll").textContent = `Roll ${student.roll} (${student.class})`;
-            document.getElementById("meta-cert").textContent = student.certNo;
-
-            document.getElementById("cert-display-name").textContent = student.name;
-            document.getElementById("cert-display-class").textContent = student.class;
-            document.getElementById("cert-display-no").textContent = student.certNo;
-
-            const verificationUrl = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(student.certNo)}`;
-            generateQRCode(verificationUrl);
-
-            document.getElementById("search-section").classList.add("hidden");
-            document.getElementById("result-section").classList.remove("hidden");
-            
-            const newUrl = `${window.location.pathname}?id=${student.certNo}`;
-            window.history.pushState({ path: newUrl }, '', newUrl);
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function generateQRCode(text) {
-            const qrContainer = document.getElementById("qrcode");
-            qrContainer.innerHTML = "";
-            qrcodeInstance = new QRCode(qrContainer, {
-                text: text,
-                width: 70,
-                height: 70,
-                colorDark : "#0f172a",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
+            const matched = students.find(s => {
+                const matchName = nameQuery ? s.name.toLowerCase().includes(nameQuery) : true;
+                const matchRoll = rollQuery ? (s.roll.toLowerCase() === rollQuery || s.certNo.toLowerCase().includes(rollQuery)) : true;
+                if (nameQuery && rollQuery) return matchName && matchRoll;
+                return nameQuery ? matchName : matchRoll;
             });
+
+            if (matched) {
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <!-- Verification Status Badge -->
+                        <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-4 flex items-center justify-between text-emerald-300">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+                                <span class="font-semibold text-sm">Official Certificate Verified Successfully</span>
+                            </div>
+                            <span class="text-xs bg-emerald-500/20 px-2.5 py-1 rounded-full font-mono">${matched.certNo}</span>
+                        </div>
+
+                        <!-- Certificate Display Card -->
+                        <div id="printable-certificate" class="bg-[#fbf9f4] text-slate-900 border-8 border-amber-100 rounded-2xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+                            <div class="text-center space-y-4">
+                                <div class="text-xs uppercase tracking-[0.3em] font-bold text-amber-700">The Monotheist</div>
+                                <h3 class="font-cinzel text-2xl sm:text-4xl font-bold tracking-wide text-slate-900">Certificate of Appreciation</h3>
+                                <p class="text-xs uppercase tracking-wider text-slate-500 pt-2">This certificate is proudly presented to</p>
+                                <div class="font-cinzel text-2xl sm:text-3xl font-bold text-amber-900 underline decoration-amber-400/60 underline-offset-8 py-2">${matched.name}</div>
+                                <p class="text-xs font-semibold uppercase text-slate-600">${matched.class} &bull; Roll No: ${matched.roll}</p>
+                                
+                                <p class="text-xs sm:text-sm text-slate-700 max-w-lg mx-auto pt-4 leading-relaxed">
+                                    in recognition of sincere effort, curiosity and steady progress in the Computer course, covering <strong>Prompt Engineering (AI)</strong>, <strong>Internet Fundamentals</strong>, <strong>Google Workspace</strong>, and <strong>Microsoft Office</strong>.
+                                </p>
+
+                                <div class="grid grid-cols-2 gap-4 pt-10 border-t border-slate-300 mt-8 text-left text-xs">
+                                    <div>
+                                        <p class="text-slate-500 uppercase font-semibold">Date of Issue</p>
+                                        <p class="font-bold text-slate-800">${matched.issueDate}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-slate-500 uppercase font-semibold">Instructor / Authority</p>
+                                        <p class="font-bold text-slate-800 font-cinzel">The Monotheist</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex gap-4">
+                            <button onclick="window.print()" class="flex-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition flex items-center justify-center space-x-2">
+                                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                                <span>Print / Save PDF</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-6 text-center text-amber-300">
+                        <p class="font-semibold mb-1">No Matching Certificate Found</p>
+                        <p class="text-xs text-amber-400/80">Please check the spelling of the name or verify the roll number / certificate ID.</p>
+                    </div>`;
+            }
+            container.classList.remove('hidden');
         }
 
-        function resetForm() {
-            document.getElementById("verification-form").reset();
-            hideError();
-            document.getElementById("result-section").classList.add("hidden");
-            document.getElementById("search-section").classList.remove("hidden");
-            
-            const cleanUrl = window.location.pathname;
-            window.history.pushState({ path: cleanUrl }, '', cleanUrl);
-        }
-
-        function showError(msg) {
-            const errDiv = document.getElementById("error-message");
-            document.getElementById("error-text").textContent = msg;
-            errDiv.classList.remove("hidden");
-        }
-
-        function hideError() {
-            document.getElementById("error-message").classList.add("hidden");
-        }
-
-        function printCertificate() {
-            window.print();
+        function clearSearch() {
+            document.getElementById('searchName').value = '';
+            document.getElementById('searchRoll').value = '';
+            document.getElementById('resultContainer').classList.add('hidden');
         }
     </script>
 </body>
