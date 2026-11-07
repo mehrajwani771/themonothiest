@@ -182,5 +182,21 @@ document.getElementById("mf").onsubmit = function (e) {
   document.getElementById("ms").textContent = "Opening your email app…";
 };
 </script>
+  <section>
+  <h2>Latest Opinion</h2>
+  <div id="latest-opinion">Loading...</div>
+</section>
+
+<script>
+  fetch("opinion.html")
+    .then(response => response.text())
+    .then(html => {
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const latest = doc.querySelector("article");
+      if (latest) {
+        document.getElementById("latest-opinion").innerHTML = latest.outerHTML;
+      }
+    });
+</script>
 </body>
 </html>
