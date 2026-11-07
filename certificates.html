@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Monotheist – Certificates</title>
+<style>
+:root{--bg:#f6f4ee;--card:#fff;--ink:#1f3864;--text:#2b2f38;--muted:#6a7080;--gold:#b8921f;--line:#e3dfd2;--ok:#1f7a4d;--okbg:#e6f3ec;--bad:#a8321f;--badbg:#fbeae6;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10172a;--card:#18213a;--ink:#c8d6f5;--text:#e4e8f2;--muted:#9aa3b8;--gold:#e0b84a;--line:#2b3654;--ok:#6fd3a0;--okbg:#173a2c;--bad:#ff9d8a;--badbg:#3d1d19}}
+:root[data-theme="dark"]{--bg:#10172a;--card:#18213a;--ink:#c8d6f5;--text:#e4e8f2;--muted:#9aa3b8;--gold:#e0b84a;--line:#2b3654;--ok:#6fd3a0;--okbg:#173a2c;--bad:#ff9d8a;--badbg:#3d1d19}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif;line-height:1.6;padding:24px 16px 40px}
+main{max-width:620px;margin:0 auto}
+.top{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px;font-size:.92rem}
+.top a,a.back{color:var(--ink);text-decoration:none;font-weight:700}.top a:hover,a.back:hover{text-decoration:underline}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.brand{text-align:center;margin-bottom:20px}
+.brand h1{margin:0;font-size:1.1rem;letter-spacing:.14em;color:var(--ink)}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:.92rem}
+.card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:6px;padding:24px 20px 20px}
+.status{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;margin-bottom:18px}
+.seal{width:80px;height:80px}
+.badge{display:inline-block;padding:4px 14px;border-radius:99px;font-size:.9rem;font-weight:700;background:var(--okbg);color:var(--ok)}
+.badge.bad{background:var(--badbg);color:var(--bad)}
+.statement{font-size:1.12rem;margin:0 0 18px;text-align:center}
+.statement b{color:var(--ink)}.statement .who{display:block;font-size:1.8rem;font-style:italic;line-height:1.25;margin:2px 0 8px}
+dl{margin:0;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:130px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+dt{color:var(--muted)}dd{margin:0;word-break:break-word}
+.list{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:6px}
+.list a{display:flex;justify-content:space-between;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}
+.list li:last-child a{border-bottom:0}.list a:hover{background:var(--bg)}
+.list b{color:var(--ink)}.list span{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.msg{text-align:center;margin:0}.foot{margin-top:22px;text-align:center;color:var(--muted);font-size:.85rem}
+a.back{display:inline-block;margin-bottom:12px}
+[hidden]{display:none!important}
+@media(max-width:440px){.row{grid-template-columns:1fr;gap:0}}
+</style></head><body><main>
+<nav class="top"><a href="index.html">← The Monotheist</a><a href="results.html">Marks Card</a></nav>
+<header class="brand"><h1>THE MONOTHEIST</h1><p>Certificates of Appreciation · Class 8</p></header>
+
+<section id="intro" hidden><div class="card"><div class="status"><p class="msg">Scan the QR code on a certificate to see its details.</p></div></div></section>
+
+<section id="one" hidden>
+  <div class="card">
+    <div class="status">
+      <svg class="seal" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="var(--ink)" stroke-width="4"/><circle cx="50" cy="50" r="40" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="50" cy="50" r="30" fill="var(--okbg)" stroke="var(--ok)" stroke-width="2"/><path d="M36 51l10 10 19-21" fill="none" stroke="var(--ok)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="badge">Genuine certificate</span>
+    </div>
+    <p class="statement">This certificate belongs to <span class="who" id="name"></span>
+      of <b>Class 8th</b>, for <b>sincere effort, curiosity and steady progress in the Computer course</b>, and for developing practical skills in <b>Prompt Engineering, Internet Fundamentals, Google Workspace and Microsoft Office</b>, awarded by <b>The Monotheist</b>.<br>Issued on <b>07-Nov-2026</b>.</p>
+    <dl>
+      <div class="row"><dt>Belongs to</dt><dd id="n2"></dd></div>
+      <div class="row"><dt>Certificate no.</dt><dd id="no"></dd></div>
+      <div class="row"><dt>Class</dt><dd>8th</dd></div>
+      <div class="row"><dt>For</dt><dd>Computer course – Prompt Engineering, Internet Fundamentals, Google Workspace, Microsoft Office</dd></div>
+      <div class="row"><dt>Awarded by</dt><dd>The Monotheist (Instructor)</dd></div>
+      <div class="row"><dt>Issued on</dt><dd>07-Nov-2026</dd></div>
+      <div class="row"><dt>Contact</dt><dd>mehrajwani771@gmail.com</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section id="missing" hidden>
+  <div class="card"><div class="status"><span class="badge bad">Not found</span><p class="msg" id="missmsg"></p></div></div>
+</section>
+<p class="foot">Certificates issued and kept by The Monotheist.</p>
+</main>
+<script>
+const DATA = [{"id": "TM-8-2026-001", "name": "Seerat Lateef"}, {"id": "TM-8-2026-002", "name": "Faisal Majeed"}, {"id": "TM-8-2026-003", "name": "Mohammad Azan Ganaie"}, {"id": "TM-8-2026-004", "name": "Junaid Ahmad Dar"}, {"id": "TM-8-2026-005", "name": "Hafsa Gulzar"}, {"id": "TM-8-2026-006", "name": "Adnan Fayaz Wani"}, {"id": "TM-8-2026-007", "name": "Suhaib Mohsin"}, {"id": "TM-8-2026-008", "name": "Tahmeed Tariq"}, {"id": "TM-8-2026-009", "name": "Arfaat Aashiq Ganaie"}, {"id": "TM-8-2026-010", "name": "Hazim Aijaz"}, {"id": "TM-8-2026-011", "name": "Sadiya Farooq"}, {"id": "TM-8-2026-012", "name": "Sabiq Ahmad Wani"}, {"id": "TM-8-2026-013", "name": "Tabasum Bashir"}];
+const $=id=>document.getElementById(id);
+function route(){
+  let id=""; try{ id=decodeURIComponent(location.hash.replace(/^#/,"")).trim().toUpperCase(); }catch(e){}
+  $("intro").hidden=$("one").hidden=$("missing").hidden=true;
+  if(!id){ $("intro").hidden=false; document.title="The Monotheist – Certificates"; return; }
+  const r=DATA.find(x=>x.id===id);
+  if(r){ $("name").textContent=r.name; $("n2").textContent=r.name; $("no").textContent=r.id; $("one").hidden=false; document.title=r.name+" – Certificate "+r.id; }
+  else { $("missmsg").textContent="No certificate with the number “"+id.slice(0,30)+"” was issued by The Monotheist."; $("missing").hidden=false; }
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route); route();
+</script></body></html>
