@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Monotheist – Certificate Verification</title>
+<style>
+:root{--bg:#f6f4ee;--card:#fff;--ink:#1f3864;--text:#2b2f38;--muted:#6a7080;--gold:#b8921f;--line:#e3dfd2;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10172a;--card:#18213a;--ink:#c8d6f5;--text:#e4e8f2;--muted:#9aa3b8;--gold:#e0b84a;--line:#2b3654}}
+:root[data-theme="dark"]{--bg:#10172a;--card:#18213a;--ink:#c8d6f5;--text:#e4e8f2;--muted:#9aa3b8;--gold:#e0b84a;--line:#2b3654}
+html{height:100%}*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif;line-height:1.55;padding:40px 16px;display:flex;justify-content:center}
+.card{width:100%;max-width:460px;height:fit-content;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:6px;padding:28px 22px;text-align:center}
+h1{margin:0 0 6px;font-size:1.05rem;letter-spacing:.14em;color:var(--ink)}
+p{margin:8px 0}.muted{color:var(--muted);font-size:.92rem}
+a.btn{display:inline-block;margin-top:14px;padding:13px 22px;border-radius:6px;background:var(--ink);color:var(--card);font-weight:700;text-decoration:none}
+a.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+</style></head><body>
+<main class="card">
+  <h1>THE MONOTHEIST</h1>
+  <p id="msg">Opening your certificate details…</p>
+  <a class="btn" id="go" href="https://mehrajwani771.github.io/themonothiest/certificates.html" target="_top" rel="noopener">View certificate details</a>
+  <p class="muted">If nothing happens, tap the button above.</p>
+</main>
+<script>
+const BASE = "https://mehrajwani771.github.io/themonothiest/certificates.html";
+let id = "";
+try { id = decodeURIComponent(location.hash.replace(/^#/, "")).trim().toUpperCase(); } catch (e) {}
+if (!/^[A-Z0-9-]{1,40}$/.test(id)) id = "";
+const target = BASE + (id ? "#" + id : "");
+document.getElementById("go").href = target;
+if (!id) document.getElementById("msg").textContent = "Tap the button to verify a certificate.";
+else setTimeout(() => {
+  try { window.top.location.replace(target); }
+  catch (e) { try { window.location.replace(target); } catch (e2) {} }
+}, 300);
+</script></body></html>
