@@ -88,6 +88,12 @@ input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radiu
 </div>
 </section>
 
+<section>
+<h2>Latest Opinion</h2>
+<div id="latest-opinion">Loading...</div>
+<p><a href="opinion.html">Read all opinion posts &rarr;</a></p>
+</section>
+
 <section id="books">
 <h2>Books</h2>
 <div class="grid">
@@ -181,22 +187,16 @@ document.getElementById("mf").onsubmit = function (e) {
     "&body=" + encodeURIComponent(f[2].value + "\n\n" + f[1].value);
   document.getElementById("ms").textContent = "Opening your email app…";
 };
-</script>
-  <section>
-  <h2>Latest Opinion</h2>
-  <div id="latest-opinion">Loading...</div>
-</section>
 
-<script>
-  fetch("opinion.html")
-    .then(response => response.text())
-    .then(html => {
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const latest = doc.querySelector("article");
-      if (latest) {
-        document.getElementById("latest-opinion").innerHTML = latest.outerHTML;
-      }
-    });
+fetch("opinion.html")
+  .then(response => response.text())
+  .then(html => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    const latest = doc.querySelector("article");
+    if (latest) {
+      document.getElementById("latest-opinion").innerHTML = latest.outerHTML;
+    }
+  });
 </script>
 </body>
 </html>
