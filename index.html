@@ -193,9 +193,35 @@ fetch("opinion.html")
   .then(html => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     const latest = doc.querySelector("article");
-    if (latest) {
-      document.getElementById("latest-opinion").innerHTML = latest.outerHTML;
-    }
+    if (!latest) return;
+
+    const title = latest.querySelector("h2")?.textContent || "";
+    const date = latest.querySelector(".date")?.textContent || "";
+    const text = latest.querySelector("p:not(.date)")?.textContent || "";
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const h3 = document.createElement("h3");
+    h3.textContent = title;
+
+    const d = document.createElement("p");
+    d.textContent = date;
+
+    const p = document.createElement("p");
+    p.textContent = text;
+    p.style.display = "-webkit-box";
+    p.style.webkitLineClamp = "3";
+    p.style.webkitBoxOrient = "vertical";
+    p.style.overflow = "hidden";
+
+    const link = document.createElement("a");
+    link.className = "btn alt";
+    link.href = "opinion.html";
+    link.textContent = "Read more →";
+
+    card.append(h3, d, p, link);
+    document.getElementById("latest-opinion").replaceChildren(card);
   });
 </script>
 </body>
