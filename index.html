@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,52 +10,300 @@
 <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Cormorant+Garamond:wght@500;700&display=swap">
+
 <style>
-:root{--bg:#f7f4ec;--card:#ffffff;--ink:#14213d;--mute:#4a5570;--oxford:#14264f;--gold:#c8a24a;--line:#dcd5c2;--h2:#14264f;--link:#14264f;--alt:#14264f;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1730;--card:#132245;--ink:#f3ead2;--mute:#b9bfd0;--oxford:#14264f;--gold:#e0b962;--line:#22345f;--h2:#e0b962;--link:#e0b962;--alt:#e0b962;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0c1730;--card:#132245;--ink:#f3ead2;--mute:#b9bfd0;--oxford:#14264f;--gold:#e0b962;--line:#22345f;--h2:#e0b962;--link:#e0b962;--alt:#e0b962;color-scheme:dark}
+:root{
+--bg:#f7f4ec;
+--card:#ffffff;
+--ink:#14213d;
+--mute:#4a5570;
+--oxford:#14264f;
+--gold:#c8a24a;
+--line:#dcd5c2;
+--h2:#14264f;
+--link:#14264f;
+--alt:#14264f;
+color-scheme:light
+}
+
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]){
+--bg:#0c1730;
+--card:#132245;
+--ink:#f3ead2;
+--mute:#b9bfd0;
+--oxford:#14264f;
+--gold:#e0b962;
+--line:#22345f;
+--h2:#e0b962;
+--link:#e0b962;
+--alt:#e0b962;
+color-scheme:dark
+}
+}
+
+:root[data-theme="dark"]{
+--bg:#0c1730;
+--card:#132245;
+--ink:#f3ead2;
+--mute:#b9bfd0;
+--oxford:#14264f;
+--gold:#e0b962;
+--line:#22345f;
+--h2:#e0b962;
+--link:#e0b962;
+--alt:#e0b962;
+color-scheme:dark
+}
+
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Lora,Georgia,serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;line-height:1.15;margin:0 0 .5em}
+
+html{
+scroll-behavior:smooth;
+scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))
+}
+
+body{
+margin:0;
+background:var(--bg);
+color:var(--ink);
+font:17px/1.65 Lora,Georgia,serif;
+padding-top:env(safe-area-inset-top,0px);
+padding-bottom:env(safe-area-inset-bottom,0px)
+}
+
+h1,h2,h3{
+font-family:"Cormorant Garamond",Georgia,serif;
+line-height:1.15;
+margin:0 0 .5em
+}
+
 h1{font-size:clamp(2.4rem,8vw,4rem)}
 h2{font-size:2rem;color:var(--h2)}
 h3{font-size:1.35rem;color:var(--ink)}
+
 a{color:var(--link)}
-header{position:sticky;top:0;z-index:20;background:var(--oxford);border-bottom:2px solid var(--gold);padding:10px 16px}
-nav{display:flex;gap:6px;overflow-x:auto;max-width:1000px;margin:auto;align-items:center}
-nav b{font-family:"Cormorant Garamond",serif;font-size:1.3rem;white-space:nowrap;margin-right:8px;color:#fff}
-nav a{white-space:nowrap;text-decoration:none;color:#fff;padding:4px 10px;border-radius:99px;font-size:.9rem}
+
+header{
+position:sticky;
+top:0;
+z-index:20;
+background:var(--oxford);
+border-bottom:2px solid var(--gold);
+padding:10px 16px
+}
+
+nav{
+display:flex;
+gap:6px;
+overflow-x:auto;
+max-width:1000px;
+margin:auto;
+align-items:center
+}
+
+nav b{
+font-family:"Cormorant Garamond",serif;
+font-size:1.3rem;
+white-space:nowrap;
+margin-right:8px;
+color:#fff
+}
+
+nav a{
+white-space:nowrap;
+text-decoration:none;
+color:#fff;
+padding:4px 10px;
+border-radius:99px;
+font-size:.9rem
+}
+
 nav a:hover{background:rgba(200,162,74,.3)}
-nav a.marks{font-weight:bold;color:var(--gold);border:1px solid var(--gold)}
-section{max-width:1000px;margin:auto;padding:56px 18px 8px}
-.herow{background:linear-gradient(rgba(12,23,48,.55),rgba(12,23,48,.8)),url(./hero.jpg) center/cover no-repeat,#14264f}
-.hero{padding:64px 18px;text-align:center;color:#fff}
+
+nav a.marks{
+font-weight:bold;
+color:var(--gold);
+border:1px solid var(--gold)
+}
+
+section{
+max-width:1000px;
+margin:auto;
+padding:56px 18px 8px
+}
+
+.herow{
+background:linear-gradient(rgba(12,23,48,.55),rgba(12,23,48,.8)),url(./hero.jpg) center/cover no-repeat,#14264f
+}
+
+.hero{
+padding:64px 18px;
+text-align:center;
+color:#fff
+}
+
 .hero h1{color:#fff}
-.hero p{max-width:600px;margin:0 auto 1.2em;opacity:.92}
-.tag{display:inline-block;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#e0b962;margin-bottom:10px}
-.btn{display:inline-block;background:var(--gold);color:var(--oxford);border:0;padding:10px 20px;border-radius:8px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer;margin:4px}
-.btn.alt{background:transparent;color:var(--alt);border:1px solid var(--gold)}
-.hero .btn{background:#c8a24a;color:#14264f}
-.hero .btn.alt{background:transparent;color:#fff;border:1px solid #fff}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:12px;padding:18px}
-.card p{margin:.3em 0 .8em;color:var(--mute);font-size:.95rem}
-.chip{font-size:.75rem;background:var(--gold);color:var(--oxford);font-weight:600;padding:2px 10px;border-radius:99px;display:inline-block;margin-bottom:6px}
-.cover{height:110px;border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:#f3ead2;font-family:"Cormorant Garamond",serif;font-size:1.3rem;text-align:center;padding:8px;background:linear-gradient(135deg,#14264f,#0a1733);border:1px solid var(--gold)}
-.cover.b{background:linear-gradient(135deg,#243b6e,#14264f)}
-.book-img{display:block;width:100%;max-width:220px;height:auto;margin:0 auto 14px;border-radius:6px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+
+.hero p{
+max-width:600px;
+margin:0 auto 1.2em;
+opacity:.92
+}
+
+.tag{
+display:inline-block;
+font-size:.8rem;
+letter-spacing:.12em;
+text-transform:uppercase;
+color:#e0b962;
+margin-bottom:10px
+}
+
+.btn{
+display:inline-block;
+background:var(--gold);
+color:var(--oxford);
+border:0;
+padding:10px 20px;
+border-radius:8px;
+font:inherit;
+font-weight:600;
+text-decoration:none;
+cursor:pointer;
+margin:4px
+}
+
+.btn.alt{
+background:transparent;
+color:var(--alt);
+border:1px solid var(--gold)
+}
+
+.hero .btn{
+background:#c8a24a;
+color:#14264f
+}
+
+.hero .btn.alt{
+background:transparent;
+color:#fff;
+border:1px solid #fff
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:16px
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-top:3px solid var(--gold);
+border-radius:12px;
+padding:18px
+}
+
+.card p{
+margin:.3em 0 .8em;
+color:var(--mute);
+font-size:.95rem
+}
+
+.chip{
+font-size:.75rem;
+background:var(--gold);
+color:var(--oxford);
+font-weight:600;
+padding:2px 10px;
+border-radius:99px;
+display:inline-block;
+margin-bottom:6px
+}
+
+.cover{
+height:110px;
+border-radius:8px;
+margin-bottom:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#f3ead2;
+font-family:"Cormorant Garamond",serif;
+font-size:1.3rem;
+text-align:center;
+padding:8px;
+background:linear-gradient(135deg,#14264f,#0a1733);
+border:1px solid var(--gold)
+}
+
+.cover.b{
+background:linear-gradient(135deg,#243b6e,#14264f)
+}
+
+.book-img{
+display:block;
+width:100%;
+max-width:220px;
+height:auto;
+margin:0 auto 14px;
+border-radius:6px;
+box-shadow:0 8px 20px rgba(0,0,0,.3)
+}
+
 .feat{grid-column:1/-1}
-.feat ol{margin:8px 0 0;padding-left:20px;font-size:.95rem}
+
+.feat ol{
+margin:8px 0 0;
+padding-left:20px;
+font-size:.95rem
+}
+
 .feat li{margin:8px 0}
+
 .feat li span{color:var(--mute)}
-details summary{cursor:pointer;color:var(--link);margin-top:10px}
-footer{max-width:1000px;margin:56px auto 0;padding:24px 18px calc(24px + env(safe-area-inset-bottom,0px));border-top:2px solid var(--gold);color:var(--mute);font-size:.9rem;text-align:center}
-form.row{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:10px}
-input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit}
-#ms{color:var(--mute);min-height:1.5em}
+
+details summary{
+cursor:pointer;
+color:var(--link);
+margin-top:10px
+}
+
+footer{
+max-width:1000px;
+margin:56px auto 0;
+padding:24px 18px calc(24px + env(safe-area-inset-bottom,0px));
+border-top:2px solid var(--gold);
+color:var(--mute);
+font-size:.9rem;
+text-align:center
+}
+
+form.row{
+display:grid;
+grid-template-columns:1fr;
+gap:10px;
+margin-bottom:10px
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+border:1px solid var(--line);
+border-radius:8px;
+background:var(--card);
+color:var(--ink);
+font:inherit
+}
+
+#ms{
+color:var(--mute);
+min-height:1.5em
+}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -63,6 +312,7 @@ input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radiu
 <a href="#about">About</a>
 <a href="#books">Books</a>
 <a href="opinion.html">Opinion</a>
+<a href="#learning">Learning</a>
 <a href="#projects">Projects</a>
 <a href="#contact">Contact</a>
 <a href="results.html" class="marks">Marks Card</a>
@@ -93,6 +343,37 @@ input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radiu
 <div id="latest-opinion">Loading...</div>
 <p><a href="opinion.html">Read all opinion posts &rarr;</a></p>
 </section>
+
+<!-- SCIENCE OF LEARNING SECTION -->
+<section id="learning">
+<h2>Science of Learning</h2>
+
+<div class="grid">
+<div class="card feat">
+
+<div class="cover" style="height:130px">
+The Science of Learning
+</div>
+
+<span class="chip">Education · Psychology · Research</span>
+
+<h3>The Science of Learning: How We Actually Learn</h3>
+
+<p>
+Learning is more than reading, memorising and repeating.
+Discover how memory works and how retrieval practice,
+spaced learning, interleaving, feedback and other
+evidence-informed techniques can transform the way we learn.
+</p>
+
+<a class="btn" href="science-of-learning.html">
+Read More &rarr;
+</a>
+
+</div>
+</div>
+</section>
+<!-- END SCIENCE OF LEARNING SECTION -->
 
 <section id="books">
 <h2>Books</h2>
@@ -140,19 +421,23 @@ input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radiu
 <section id="projects">
 <h2>Projects</h2>
 <div class="grid">
+
 <div class="card">
 <h3>Marks Card</h3>
 <p>Students can view and print their marks cards by entering their roll number and name.</p>
 <a class="btn" href="results.html">Open Marks Card</a>
 </div>
+
 <div class="card">
 <h3>The Monotheist Library</h3>
 <p>A growing library of books, notes and records for readers and students.</p>
 </div>
+
 <div class="card">
 <h3>Reading &amp; Project Ledger</h3>
 <p>A personal record of books read and projects completed.</p>
 </div>
+
 </div>
 </section>
 
@@ -160,36 +445,50 @@ input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radiu
 <h2>Contact</h2>
 <div class="card">
 <p style="margin-top:0">Questions about books, classes or material? Reach out:</p>
-<p>✉ <a href="mailto:mehrajwan771@gmail.com">mehrajwan771@gmail.com</a><br>
+
+<p>
+✉ <a href="mailto:mehrajwan771@gmail.com">mehrajwan771@gmail.com</a><br>
 <a href="https://www.facebook.com/share/19zCHe2Qod/" target="_blank" rel="noopener">Facebook: The Monotheist MW</a><br>
-<a href="https://www.instagram.com/themonotheist1" target="_blank" rel="noopener">Instagram: Monotheist MW</a></p>
+<a href="https://www.instagram.com/themonotheist1" target="_blank" rel="noopener">Instagram: Monotheist MW</a>
+</p>
+
 <form id="mf" class="row">
 <input placeholder="Your name" required>
 <input type="email" placeholder="Email" required>
 <textarea rows="4" placeholder="Message" required></textarea>
 <button class="btn" type="submit">Send</button>
 </form>
+
 <div id="ms"></div>
 </div>
 </section>
 
-<footer>© <span id="yr"></span> The Monotheist · The Monotheist Library</footer>
+<footer>
+© <span id="yr"></span> The Monotheist · The Monotheist Library
+</footer>
 
 <script>
 document.getElementById("yr").textContent = new Date().getFullYear();
 
 var CONTACT_EMAIL = "mehrajwan771@gmail.com";
+
 document.getElementById("mf").onsubmit = function (e) {
   e.preventDefault();
   var f = this.elements;
+
   location.href = "mailto:" + CONTACT_EMAIL +
     "?subject=" + encodeURIComponent("Message from " + f[0].value) +
     "&body=" + encodeURIComponent(f[2].value + "\n\n" + f[1].value);
+
   document.getElementById("ms").textContent = "Opening your email app…";
 };
 
+/* AUTOMATIC LATEST OPINION LOADING */
 fetch("opinion.html")
-  .then(response => response.text())
+  .then(response => {
+    if (!response.ok) throw new Error("Could not load opinion page");
+    return response.text();
+  })
   .then(html => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     const latest = doc.querySelector("article");
@@ -222,7 +521,12 @@ fetch("opinion.html")
 
     card.append(h3, d, p, link);
     document.getElementById("latest-opinion").replaceChildren(card);
+  })
+  .catch(() => {
+    document.getElementById("latest-opinion").textContent =
+      "Visit the Opinion page to explore the latest writings.";
   });
 </script>
+
 </body>
 </html>
