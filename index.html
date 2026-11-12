@@ -2,530 +2,1240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The Monotheist</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>The Monotheist | Independent Writing and Publishing</title>
+
+<meta name="description" content="The Monotheist is an independent writing and publishing platform exploring philosophy, Islamic thought, ethics, education, science, literature and contemporary affairs.">
+
+<meta name="author" content="The Monotheist">
+<meta name="theme-color" content="#14264f">
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://themonotheistmw.github.io/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Monotheist">
+<meta property="og:description" content="Independent writing and publishing on philosophy, Islamic thought, ethics, education, science and contemporary affairs.">
+<meta property="og:url" content="https://themonotheistmw.github.io/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Monotheist">
+<meta name="twitter:description" content="Independent writing and publishing on philosophy, Islamic thought, ethics, education, science and contemporary affairs.">
+
 <link rel="icon" type="image/x-icon" href="./favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Cormorant+Garamond:wght@500;700&display=swap">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
---bg:#f7f4ec;
---card:#ffffff;
---ink:#14213d;
---mute:#4a5570;
---oxford:#14264f;
---gold:#c8a24a;
---line:#dcd5c2;
---h2:#14264f;
---link:#14264f;
---alt:#14264f;
-color-scheme:light
+:root {
+    --bg: #f7f4ec;
+    --paper: #ffffff;
+    --ink: #18233b;
+    --muted: #58627a;
+    --navy: #14264f;
+    --deep: #0c1730;
+    --gold: #c8a24a;
+    --gold-light: #e0b962;
+    --line: #ded7c6;
+    --soft: #f0eadb;
+    --shadow: 0 8px 28px rgba(20,38,79,.07);
+    color-scheme: light;
 }
 
-@media (prefers-color-scheme:dark){
-:root:not([data-theme="light"]){
---bg:#0c1730;
---card:#132245;
---ink:#f3ead2;
---mute:#b9bfd0;
---oxford:#14264f;
---gold:#e0b962;
---line:#22345f;
---h2:#e0b962;
---link:#e0b962;
---alt:#e0b962;
-color-scheme:dark
-}
-}
-
-:root[data-theme="dark"]{
---bg:#0c1730;
---card:#132245;
---ink:#f3ead2;
---mute:#b9bfd0;
---oxford:#14264f;
---gold:#e0b962;
---line:#22345f;
---h2:#e0b962;
---link:#e0b962;
---alt:#e0b962;
-color-scheme:dark
+:root[data-theme="dark"] {
+    --bg: #0c1730;
+    --paper: #132245;
+    --ink: #f3ead2;
+    --muted: #bbc4d6;
+    --navy: #14264f;
+    --deep: #081329;
+    --gold: #e0b962;
+    --gold-light: #efd18a;
+    --line: #2a3b60;
+    --soft: #1a2b4e;
+    --shadow: 0 8px 28px rgba(0,0,0,.2);
+    color-scheme: dark;
 }
 
-*{box-sizing:border-box}
-
-html{
-scroll-behavior:smooth;
-scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))
+* {
+    box-sizing: border-box;
 }
 
-body{
-margin:0;
-background:var(--bg);
-color:var(--ink);
-font:17px/1.65 Lora,Georgia,serif;
-padding-top:env(safe-area-inset-top,0px);
-padding-bottom:env(safe-area-inset-bottom,0px)
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
 }
 
-h1,h2,h3{
-font-family:"Cormorant Garamond",Georgia,serif;
-line-height:1.15;
-margin:0 0 .5em
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.8;
 }
 
-h1{font-size:clamp(2.4rem,8vw,4rem)}
-h2{font-size:2rem;color:var(--h2)}
-h3{font-size:1.35rem;color:var(--ink)}
-
-a{color:var(--link)}
-
-header{
-position:sticky;
-top:0;
-z-index:20;
-background:var(--oxford);
-border-bottom:2px solid var(--gold);
-padding:10px 16px
+a {
+    color: var(--navy);
 }
 
-nav{
-display:flex;
-gap:6px;
-overflow-x:auto;
-max-width:1000px;
-margin:auto;
-align-items:center
+:root[data-theme="dark"] a {
+    color: var(--gold-light);
 }
 
-nav b{
-font-family:"Cormorant Garamond",serif;
-font-size:1.3rem;
-white-space:nowrap;
-margin-right:8px;
-color:#fff
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 4px;
 }
 
-nav a{
-white-space:nowrap;
-text-decoration:none;
-color:#fff;
-padding:4px 10px;
-border-radius:99px;
-font-size:.9rem
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 10px;
+    z-index: 100;
+    padding: 10px 16px;
+    background: var(--gold);
+    color: var(--deep);
 }
 
-nav a:hover{background:rgba(200,162,74,.3)}
-
-nav a.marks{
-font-weight:bold;
-color:var(--gold);
-border:1px solid var(--gold)
+.skip-link:focus {
+    top: 10px;
 }
 
-section{
-max-width:1000px;
-margin:auto;
-padding:56px 18px 8px
+h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    line-height: 1.15;
 }
 
-.herow{
-background:linear-gradient(rgba(12,23,48,.55),rgba(12,23,48,.8)),url(./hero.jpg) center/cover no-repeat,#14264f
+h1 {
+    font-size: clamp(3rem, 8vw, 5.5rem);
 }
 
-.hero{
-padding:64px 18px;
-text-align:center;
-color:#fff
+h2 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    color: var(--navy);
+    margin: 0 0 12px;
 }
 
-.hero h1{color:#fff}
-
-.hero p{
-max-width:600px;
-margin:0 auto 1.2em;
-opacity:.92
+:root[data-theme="dark"] h2,
+:root[data-theme="dark"] h3 {
+    color: var(--gold-light);
 }
 
-.tag{
-display:inline-block;
-font-size:.8rem;
-letter-spacing:.12em;
-text-transform:uppercase;
-color:#e0b962;
-margin-bottom:10px
+h3 {
+    font-size: 1.65rem;
+    color: var(--navy);
+    margin: 10px 0;
 }
 
-.btn{
-display:inline-block;
-background:var(--gold);
-color:var(--oxford);
-border:0;
-padding:10px 20px;
-border-radius:8px;
-font:inherit;
-font-weight:600;
-text-decoration:none;
-cursor:pointer;
-margin:4px
+p {
+    margin: 0 0 16px;
 }
 
-.btn.alt{
-background:transparent;
-color:var(--alt);
-border:1px solid var(--gold)
+.container {
+    max-width: 1120px;
+    margin: auto;
+    padding-left: 22px;
+    padding-right: 22px;
 }
 
-.hero .btn{
-background:#c8a24a;
-color:#14264f
+/* NAVIGATION */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--deep);
+    border-bottom: 2px solid var(--gold);
 }
 
-.hero .btn.alt{
-background:transparent;
-color:#fff;
-border:1px solid #fff
+.navbar {
+    max-width: 1200px;
+    margin: auto;
+    min-height: 70px;
+    padding: 10px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:16px
+.brand {
+    color: white;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
-.card{
-background:var(--card);
-border:1px solid var(--line);
-border-top:3px solid var(--gold);
-border-radius:12px;
-padding:18px
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.card p{
-margin:.3em 0 .8em;
-color:var(--mute);
-font-size:.95rem
+.nav-links a,
+.theme-toggle {
+    color: white;
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+    font-family: Arial, sans-serif;
+    font-size: .88rem;
+    padding: 9px 11px;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-.chip{
-font-size:.75rem;
-background:var(--gold);
-color:var(--oxford);
-font-weight:600;
-padding:2px 10px;
-border-radius:99px;
-display:inline-block;
-margin-bottom:6px
+.nav-links a:hover,
+.theme-toggle:hover {
+    color: var(--gold-light);
+    background: rgba(255,255,255,.07);
 }
 
-.cover{
-height:110px;
-border-radius:8px;
-margin-bottom:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#f3ead2;
-font-family:"Cormorant Garamond",serif;
-font-size:1.3rem;
-text-align:center;
-padding:8px;
-background:linear-gradient(135deg,#14264f,#0a1733);
-border:1px solid var(--gold)
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: white;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
-.cover.b{
-background:linear-gradient(135deg,#243b6e,#14264f)
+/* HERO */
+
+.hero {
+    background:
+        radial-gradient(circle at 50% 0%, #294476 0%, transparent 55%),
+        linear-gradient(135deg, #081329, #14264f 65%, #1b315c);
+    color: white;
+    text-align: center;
+    padding: 105px 22px 95px;
+    border-bottom: 4px solid var(--gold);
 }
 
-.book-img{
-display:block;
-width:100%;
-max-width:220px;
-height:auto;
-margin:0 auto 14px;
-border-radius:6px;
-box-shadow:0 8px 20px rgba(0,0,0,.3)
+.hero-inner {
+    max-width: 900px;
+    margin: auto;
 }
 
-.feat{grid-column:1/-1}
-
-.feat ol{
-margin:8px 0 0;
-padding-left:20px;
-font-size:.95rem
+.eyebrow {
+    display: inline-block;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    font-family: Arial, sans-serif;
+    font-size: .8rem;
+    margin-bottom: 18px;
 }
 
-.feat li{margin:8px 0}
-
-.feat li span{color:var(--mute)}
-
-details summary{
-cursor:pointer;
-color:var(--link);
-margin-top:10px
+.hero h1 {
+    color: white;
+    margin: 0 0 18px;
+    font-weight: 600;
 }
 
-footer{
-max-width:1000px;
-margin:56px auto 0;
-padding:24px 18px calc(24px + env(safe-area-inset-bottom,0px));
-border-top:2px solid var(--gold);
-color:var(--mute);
-font-size:.9rem;
-text-align:center
+.hero .subtitle {
+    max-width: 760px;
+    margin: auto;
+    color: #e5eaf3;
+    font-size: 1.12rem;
 }
 
-form.row{
-display:grid;
-grid-template-columns:1fr;
-gap:10px;
-margin-bottom:10px
+.hero .identity {
+    margin-top: 22px;
+    color: var(--gold-light);
+    font-size: .9rem;
+    letter-spacing: .08em;
 }
 
-input,textarea{
-width:100%;
-padding:10px;
-border:1px solid var(--line);
-border-radius:8px;
-background:var(--card);
-color:var(--ink);
-font:inherit
+.hero-actions {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
-#ms{
-color:var(--mute);
-min-height:1.5em
+/* BUTTONS */
+
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 7px;
+    padding: 11px 22px;
+    font-family: Arial, sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    transition: .2s ease;
+    border: 1px solid var(--gold);
+}
+
+.btn-primary {
+    background: var(--gold);
+    color: var(--deep) !important;
+}
+
+.btn-outline {
+    color: white !important;
+    background: transparent;
+    border-color: rgba(255,255,255,.7);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,.15);
+}
+
+/* GENERAL SECTIONS */
+
+section {
+    padding-top: 75px;
+    padding-bottom: 12px;
+}
+
+.section-heading {
+    margin-bottom: 30px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    max-width: 760px;
+}
+
+.section-kicker {
+    display: block;
+    color: #a47d2c;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font: 600 .75rem Arial, sans-serif;
+    margin-bottom: 8px;
+}
+
+:root[data-theme="dark"] .section-kicker {
+    color: var(--gold-light);
+}
+
+/* ABOUT */
+
+.about-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gold);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+}
+
+.about-card p:last-child {
+    margin-bottom: 0;
+}
+
+.about-note {
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* GRIDS AND CARDS */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card p {
+    color: var(--muted);
+    font-size: .94rem;
+}
+
+.card .btn {
+    margin-top: auto;
+}
+
+.card-tag {
+    display: inline-block;
+    background: var(--soft);
+    color: var(--navy);
+    border-radius: 30px;
+    padding: 4px 11px;
+    font: 600 .72rem Arial, sans-serif;
+    margin-bottom: 10px;
+}
+
+:root[data-theme="dark"] .card-tag {
+    color: var(--gold-light);
+}
+
+.card-link {
+    margin-top: auto;
+    display: inline-block;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+/* FEATURED BOOK */
+
+.featured-book {
+    display: grid;
+    grid-template-columns: minmax(150px, 230px) 1fr;
+    gap: 30px;
+    align-items: center;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+}
+
+.featured-book img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    display: block;
+    margin: auto;
+    border-radius: 5px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.2);
+}
+
+.status {
+    display: inline-block;
+    color: var(--navy);
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 30px;
+    padding: 4px 12px;
+    font: 600 .72rem Arial, sans-serif;
+    margin-bottom: 10px;
+}
+
+:root[data-theme="dark"] .status {
+    color: var(--gold-light);
+}
+
+/* WRITINGS */
+
+.writing-card {
+    min-height: 245px;
+}
+
+.writing-date {
+    font: .78rem Arial, sans-serif;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+/* PROJECTS */
+
+.project-list {
+    padding-left: 22px;
+    margin: 10px 0 0;
+}
+
+.project-list li {
+    margin: 9px 0;
+    color: var(--muted);
+}
+
+/* CONTACT */
+
+.contact-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+}
+
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.contact-links a {
+    text-decoration: none;
+    border: 1px solid var(--line);
+    padding: 10px 15px;
+    border-radius: 7px;
+}
+
+.contact-links a:hover {
+    border-color: var(--gold);
+}
+
+/* FOOTER */
+
+footer {
+    margin-top: 85px;
+    background: var(--deep);
+    color: #d6dbea;
+    border-top: 3px solid var(--gold);
+    padding: 38px 20px;
+    text-align: center;
+}
+
+footer p {
+    margin: 5px 0;
+    font-size: .85rem;
+}
+
+footer a {
+    color: var(--gold-light) !important;
+    text-decoration: none;
+}
+
+.footer-brand {
+    font: 600 1.7rem 'Cormorant Garamond', serif;
+    color: white;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 850px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 0;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a,
+    .theme-toggle {
+        text-align: left;
+        padding: 12px;
+    }
+}
+
+@media(max-width: 600px) {
+    body {
+        font-size: 15px;
+    }
+
+    .hero {
+        padding: 75px 18px;
+    }
+
+    .hero .subtitle {
+        font-size: 1rem;
+    }
+
+    section {
+        padding-top: 55px;
+    }
+
+    .container {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .about-card,
+    .contact-card {
+        padding: 21px;
+    }
+
+    .featured-book {
+        grid-template-columns: 1fr;
+        text-align: left;
+        padding: 22px;
+    }
+
+    .featured-book img {
+        max-width: 180px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: .01ms !important;
+    }
 }
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "The Monotheist",
+  "url": "https://themonotheistmw.github.io/",
+  "sameAs": [
+    "https://www.instagram.com/themonotheist1",
+    "https://www.facebook.com/share/19zCHe2Qod/"
+  ]
+}
+</script>
+
 </head>
 
 <body>
 
+<a class="skip-link" href="#main">Skip to main content</a>
+
 <header>
-<nav>
-<b>The Monotheist</b>
-<a href="#about">About</a>
-<a href="#books">Books</a>
-<a href="opinion.html">Opinion</a>
-<a href="#learning">Learning</a>
-<a href="#projects">Projects</a>
-<a href="#contact">Contact</a>
-<a href="results.html" class="marks">Marks Card</a>
-</nav>
+    <div class="navbar">
+
+        <a class="brand" href="#home">The Monotheist</a>
+
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="navLinks">
+            ☰
+        </button>
+
+        <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+            <a href="#home">Home</a>
+            <a href="#writings">Writings</a>
+            <a href="#books">Books</a>
+            <a href="#education">Education</a>
+            <a href="#projects">Projects</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+
+            <button class="theme-toggle" id="themeToggle" type="button">
+                Dark mode
+            </button>
+        </nav>
+
+    </div>
 </header>
 
-<div class="herow">
-<section class="hero" id="home">
-<span class="tag">Student · Teacher · Author</span>
-<h1>The Monotheist</h1>
-<p>Student striving to revive moral, ethical and humanitarian values.</p>
-<a class="btn" href="#books">Explore my books</a>
-<a class="btn" href="results.html">View Marks Card</a>
-<a class="btn alt" href="#contact">Contact me</a>
-</section>
+<main id="main">
+
+<!-- HERO -->
+
+<div class="hero" id="home">
+    <div class="hero-inner">
+
+        <span class="eyebrow">
+            Independent Writing and Publishing
+        </span>
+
+        <h1>The Monotheist</h1>
+
+        <p class="subtitle">
+            Independent writing and publishing on philosophy,
+            Islamic thought, ethics, education, science,
+            literature and contemporary affairs.
+        </p>
+
+        <p class="identity">
+            Independent Writer · Educator · Author
+        </p>
+
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="#writings">
+                Explore Writings
+            </a>
+
+            <a class="btn btn-outline" href="#books">
+                Explore Books
+            </a>
+        </div>
+
+    </div>
 </div>
+
+<!-- ABOUT -->
 
 <section id="about">
-<h2>About</h2>
-<div class="card">
-<p style="color:var(--ink)">I’m <b>The Monotheist</b> – a self-confessed failed student and a failed private teacher, still striving to revive moral, ethical and humanitarian values.</p>
-<p style="color:var(--ink)">I teach whatever is placed in front of me at the moment, and I read and write on many subjects and essays. My aim is simple: every idea should start simply and build step by step, so that anyone willing to learn can follow it.</p>
-</div>
+    <div class="container">
+
+        <div class="section-heading">
+            <span class="section-kicker">The person behind the platform</span>
+            <h2>About The Monotheist</h2>
+        </div>
+
+        <div class="about-card">
+
+            <p>
+                The Monotheist is the personal writing and publishing
+                identity of an independent author and educator.
+                It brings together work on philosophy, Islamic thought,
+                ethics, education, science, literature and contemporary affairs.
+            </p>
+
+            <p>
+                The purpose of this platform is to examine ideas carefully,
+                question assumptions, follow arguments wherever the evidence
+                leads, and make serious subjects accessible without stripping
+                them of their complexity.
+            </p>
+
+            <p>
+                Its contents range from short reflections and opinion pieces
+                to research-based articles, educational resources and complete
+                book manuscripts. Some works are intended for general readers;
+                others are designed for students and readers seeking a deeper
+                engagement with a subject.
+            </p>
+
+            <p class="about-note">
+                An independent intellectual and publishing platform.
+                Not affiliated with or backed by any institution or organisation.
+            </p>
+
+        </div>
+
+    </div>
 </section>
 
-<section>
-<h2>Latest Opinion</h2>
-<div id="latest-opinion">Loading...</div>
-<p><a href="opinion.html">Read all opinion posts &rarr;</a></p>
+<!-- WRITINGS -->
+
+<section id="writings">
+    <div class="container">
+
+        <div class="section-heading">
+            <span class="section-kicker">Ideas, arguments and reflections</span>
+            <h2>Writings</h2>
+            <p>
+                Articles, essays and reflections exploring questions
+                of knowledge, belief, society, morality and the world
+                in which we live.
+            </p>
+        </div>
+
+        <div class="grid">
+
+            <article class="card writing-card">
+                <span class="card-tag">Education · Research</span>
+                <h3>The Science of Learning</h3>
+                <p>
+                    How the human mind acquires, retains, understands
+                    and applies knowledge. An exploration of memory,
+                    retrieval practice, spaced learning, feedback
+                    and effective teaching.
+                </p>
+                <a class="card-link" href="science-of-learning.html">
+                    Read the article →
+                </a>
+            </article>
+
+            <article class="card writing-card">
+                <span class="card-tag">Geopolitics · Commentary</span>
+                <h3>Opinion and Contemporary Affairs</h3>
+                <p>
+                    Personal analysis and commentary on geopolitical
+                    developments, international relations, political
+                    movements and the changing global order.
+                </p>
+                <a class="card-link" href="opinion.html">
+                    Explore opinion writings →
+                </a>
+            </article>
+
+            <article class="card writing-card">
+                <span class="card-tag">Philosophy · Reasoning</span>
+                <h3>Philosophy and Reasoning</h3>
+                <p>
+                    Reflections on arguments, rational inquiry,
+                    knowledge, truth, assumptions and the foundations
+                    of critical thinking.
+                </p>
+                <span class="about-note">More writings forthcoming.</span>
+            </article>
+
+            <article class="card writing-card">
+                <span class="card-tag">Islamic Thought</span>
+                <h3>Islamic Sciences and Intellectual History</h3>
+                <p>
+                    Explorations of Islamic intellectual traditions,
+                    theology, philosophy, scholarship, ethics
+                    and the history of ideas.
+                </p>
+                <span class="about-note">More writings forthcoming.</span>
+            </article>
+
+            <article class="card writing-card">
+                <span class="card-tag">Ethics · Society</span>
+                <h3>Ethics and Morality</h3>
+                <p>
+                    Essays on moral responsibility, human conduct,
+                    social values, justice, character and the
+                    philosophical foundations of ethical life.
+                </p>
+                <span class="about-note">More writings forthcoming.</span>
+            </article>
+
+            <article class="card writing-card">
+                <span class="card-tag">Literature · Reflection</span>
+                <h3>Literature and Personal Reflections</h3>
+                <p>
+                    Literary observations, philosophical reflections,
+                    cultural commentary and explorations of
+                    the human condition.
+                </p>
+                <span class="about-note">More writings forthcoming.</span>
+            </article>
+
+        </div>
+
+    </div>
 </section>
 
-<!-- SCIENCE OF LEARNING SECTION -->
-<section id="learning">
-<h2>Science of Learning</h2>
-
-<div class="grid">
-<div class="card feat">
-
-<div class="cover" style="height:130px">
-The Science of Learning
-</div>
-
-<span class="chip">Education · Psychology · Research</span>
-
-<h3>The Science of Learning: How We Actually Learn</h3>
-
-<p>
-Learning is more than reading, memorising and repeating.
-Discover how memory works and how retrieval practice,
-spaced learning, interleaving, feedback and other
-evidence-informed techniques can transform the way we learn.
-</p>
-
-<a class="btn" href="science-of-learning.html">
-Read More &rarr;
-</a>
-
-</div>
-</div>
-</section>
-<!-- END SCIENCE OF LEARNING SECTION -->
+<!-- BOOKS -->
 
 <section id="books">
-<h2>Books</h2>
-<div class="grid">
+    <div class="container">
 
-<div class="card feat">
-<div class="cover" style="height:130px">Foundations of Computer Science</div>
-<span class="chip">Textbook · 19 chapters · 6 units</span>
-<h3>Foundations of Computer Science</h3>
-<p><b>From Basics to Artificial Intelligence.</b> Written for first-time learners, with no prior knowledge needed. Every chapter has learning objectives, review questions and a glossary, from “What is a computer?” to Python, AI and the ethics of AI.</p>
-<a class="btn" href="Foundations_of_Computer_Science.pdf" target="_blank" rel="noopener">Read online (PDF)</a>
-<a class="btn alt" href="Foundations_of_Computer_Science.docx" download>Download (Word)</a>
-<details style="margin-top:10px">
-<summary>View table of contents</summary>
-<ol>
-<li><b>Unit 1 – Computer Fundamentals</b> (Ch. 1–6)<br><span>Introduction to Computers; Computer Hardware; Computer Software; Data Storage and Memory; Operating System Basics; File Management</span></li>
-<li><b>Unit 2 – Productivity &amp; Office Tools</b> (Ch. 7–9)<br><span>MS Word; MS PowerPoint; MS Excel</span></li>
-<li><b>Unit 3 – Internet, Communication &amp; Safety</b> (Ch. 10–12)<br><span>Internet Basics; Email and Online Communication; Cyber Safety and Digital Etiquette</span></li>
-<li><b>Unit 4 – Computational Thinking &amp; Problem Solving</b> (Ch. 13–15)<br><span>Logical Thinking and Problem Solving; Algorithms; Flowcharts</span></li>
-<li><b>Unit 5 – Introduction to Coding</b> (Ch. 16–17)<br><span>Introduction to Coding (Scratch); Basic Python Programming</span></li>
-<li><b>Unit 6 – Artificial Intelligence &amp; Ethics</b> (Ch. 18–19)<br><span>Artificial Intelligence; Ethics of AI</span></li>
-</ol>
-</details>
-</div>
+        <div class="section-heading">
+            <span class="section-kicker">Books and manuscripts</span>
+            <h2>Books</h2>
+            <p>
+                Educational textbooks, philosophical works and
+                independent research projects. Publication status
+                is identified clearly so readers can distinguish
+                completed works from manuscripts in progress.
+            </p>
+        </div>
 
-<div class="card">
-<div class="cover b">Computer Series, Class 1–9</div>
-<span class="chip">Practical series</span>
-<h3>Primary Computer Series</h3>
-<p>Practical, activity-based computer books for Classes 1 to 9, leading into the CS textbook.</p>
-<a href="#contact">Enquire</a>
-</div>
+        <div class="grid">
 
-<div class="card">
-<img class="book-img" src="muslim-philosophy-cover.svg" alt="Book cover: Muslim Philosophy and Philosophers by The Monotheist">
-<span class="chip">Draft · Not yet finalized</span>
-<h3>Muslim Philosophy and Philosophers</h3>
-<p>A history of Islamic philosophy from the Graeco-Arabic translation movement to contemporary thought, with a clickable table of contents.</p>
-<a class="btn" href="muslim-philosophy-and-philosophers.html">Read the draft</a>
-</div>
+            <article class="card">
+                <span class="card-tag">Textbook</span>
 
-</div>
+                <h3>Foundations of Computer Science</h3>
+
+                <p>
+                    From computer fundamentals and productivity
+                    software to computational thinking, coding,
+                    Python, artificial intelligence and AI ethics.
+                </p>
+
+                <p>
+                    A structured introduction for learners
+                    beginning their journey in computer studies.
+                </p>
+
+                <a class="btn btn-primary"
+                   href="Foundations_of_Computer_Science.pdf"
+                   target="_blank"
+                   rel="noopener">
+                    Read PDF
+                </a>
+
+                <p style="margin-top:12px">
+                    <a href="Foundations_of_Computer_Science.docx" download>
+                        Download Word edition
+                    </a>
+                </p>
+            </article>
+
+            <article class="card">
+                <span class="card-tag">Educational Series</span>
+
+                <h3>Computer Studies — Classes 1–8</h3>
+
+                <p>
+                    An eight-level educational series designed
+                    to develop computer literacy, practical skills,
+                    logical thinking, computational understanding
+                    and familiarity with emerging technologies.
+                </p>
+
+                <p class="about-note">
+                    Series and supporting materials are being developed
+                    and refined.
+                </p>
+            </article>
+
+            <article class="card">
+                <span class="card-tag">Educational Series</span>
+
+                <h3>Islamic Studies — Classes 1–10</h3>
+
+                <p>
+                    A developing educational series intended to bring
+                    together foundational Islamic knowledge, Qur'anic
+                    studies, Sirah, history, manners, ethics and
+                    age-appropriate religious learning.
+                </p>
+
+                <p class="about-note">
+                    In development.
+                </p>
+            </article>
+
+            <article class="card">
+                <img
+                    src="muslim-philosophy-cover.svg"
+                    alt="Cover of Muslim Philosophy and Philosophers"
+                    style="width:100%;max-width:190px;height:auto;margin:0 auto 18px;">
+
+                <span class="status">Draft manuscript · Under review</span>
+
+                <h3>Muslim Philosophy and Philosophers</h3>
+
+                <p>
+                    A historical and philosophical exploration of
+                    Muslim intellectual traditions, from the
+                    Graeco-Arabic translation movement to classical,
+                    post-classical and modern thought.
+                </p>
+
+                <a class="btn btn-primary"
+                   href="muslim-philosophy-and-philosophers.html">
+                    Read the draft
+                </a>
+            </article>
+
+            <article class="card">
+                <span class="card-tag">Philosophy</span>
+
+                <h3>General Philosophy</h3>
+
+                <p>
+                    A comprehensive philosophical project intended
+                    to introduce fundamental questions, arguments
+                    and schools of thought through a progressive
+                    educational approach.
+                </p>
+
+                <p class="about-note">
+                    Project in development.
+                </p>
+            </article>
+
+        </div>
+
+    </div>
 </section>
+
+<!-- EDUCATION -->
+
+<section id="education">
+    <div class="container">
+
+        <div class="section-heading">
+            <span class="section-kicker">Learning and teaching</span>
+            <h2>Education</h2>
+            <p>
+                Educational material designed to make knowledge
+                understandable, structured and useful.
+            </p>
+        </div>
+
+        <div class="grid">
+
+            <article class="card">
+                <span class="card-tag">Learning Science</span>
+                <h3>How Learning Works</h3>
+                <p>
+                    Research-informed principles for students,
+                    teachers and independent learners.
+                </p>
+                <a class="card-link" href="science-of-learning.html">
+                    Explore →
+                </a>
+            </article>
+
+            <article class="card">
+                <span class="card-tag">Computer Education</span>
+                <h3>Computer Literacy</h3>
+                <p>
+                    From elementary computer awareness to
+                    programming, computational thinking
+                    and artificial intelligence.
+                </p>
+                <a class="card-link" href="#books">
+                    Explore the series →
+                </a>
+            </article>
+
+            <article class="card">
+                <span class="card-tag">Islamic Education</span>
+                <h3>Foundational Islamic Learning</h3>
+                <p>
+                    Structured learning material covering
+                    Islamic knowledge, history, ethics,
+                    Qur'anic studies and related disciplines.
+                </p>
+                <a class="card-link" href="#books">
+                    Explore the series →
+                </a>
+            </article>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- PROJECTS -->
 
 <section id="projects">
-<h2>Projects</h2>
-<div class="grid">
+    <div class="container">
 
-<div class="card">
-<h3>Marks Card</h3>
-<p>Students can view and print their marks cards by entering their roll number and name.</p>
-<a class="btn" href="results.html">Open Marks Card</a>
-</div>
+        <div class="section-heading">
+            <span class="section-kicker">Work in progress</span>
+            <h2>Research and Projects</h2>
+            <p>
+                Ongoing intellectual, educational and publishing
+                initiatives.
+            </p>
+        </div>
 
-<div class="card">
-<h3>The Monotheist Library</h3>
-<p>A growing library of books, notes and records for readers and students.</p>
-</div>
+        <div class="about-card">
 
-<div class="card">
-<h3>Reading &amp; Project Ledger</h3>
-<p>A personal record of books read and projects completed.</p>
-</div>
+            <h3>Current Areas of Work</h3>
 
-</div>
+            <ul class="project-list">
+                <li>
+                    Development and revision of Computer Studies
+                    textbooks for Classes 1–8.
+                </li>
+
+                <li>
+                    Preparation of Islamic Studies textbooks
+                    for Classes 1–10.
+                </li>
+
+                <li>
+                    Research, writing and revision of
+                    <i>Muslim Philosophy and Philosophers</i>.
+                </li>
+
+                <li>
+                    Development of a comprehensive General
+                    Philosophy book.
+                </li>
+
+                <li>
+                    Research-based essays on philosophy,
+                    ethics, Islamic intellectual history,
+                    education and contemporary affairs.
+                </li>
+
+                <li>
+                    Development of an organised digital
+                    library of educational and intellectual
+                    resources.
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
 </section>
+
+<!-- CONTACT -->
 
 <section id="contact">
-<h2>Contact</h2>
-<div class="card">
-<p style="margin-top:0">Questions about books, classes or material? Reach out:</p>
+    <div class="container">
 
-<p>
-✉ <a href="mailto:mehrajwan771@gmail.com">mehrajwan771@gmail.com</a><br>
-<a href="https://www.facebook.com/share/19zCHe2Qod/" target="_blank" rel="noopener">Facebook: The Monotheist MW</a><br>
-<a href="https://www.instagram.com/themonotheist1" target="_blank" rel="noopener">Instagram: Monotheist MW</a>
-</p>
+        <div class="section-heading">
+            <span class="section-kicker">Correspondence</span>
+            <h2>Contact</h2>
+            <p>
+                For discussions, questions about publications,
+                educational material and intellectual correspondence.
+            </p>
+        </div>
 
-<form id="mf" class="row">
-<input placeholder="Your name" required>
-<input type="email" placeholder="Email" required>
-<textarea rows="4" placeholder="Message" required></textarea>
-<button class="btn" type="submit">Send</button>
-</form>
+        <div class="contact-card">
 
-<div id="ms"></div>
-</div>
+            <h3>Get in Touch</h3>
+
+            <p>
+                Email is the preferred channel for detailed
+                correspondence and enquiries.
+            </p>
+
+            <div class="contact-links">
+
+                <a href="mailto:mehrajwan771@gmail.com">
+                    ✉ Email
+                </a>
+
+                <a href="https://www.instagram.com/themonotheist1"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Instagram
+                </a>
+
+                <a href="https://www.facebook.com/share/19zCHe2Qod/"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Facebook
+                </a>
+
+            </div>
+
+            <p style="margin-top:24px;color:var(--muted);font-size:.9rem">
+                Email: mehrajwan771@gmail.com
+            </p>
+
+        </div>
+
+    </div>
 </section>
 
+</main>
+
+<!-- FOOTER -->
+
 <footer>
-© <span id="yr"></span> The Monotheist · The Monotheist Library
+
+    <div class="footer-brand">The Monotheist</div>
+
+    <p>
+        Independent writing, research and publishing.
+    </p>
+
+    <p>
+        Philosophy · Islamic Thought · Ethics · Education · Science · Literature
+    </p>
+
+    <p style="margin-top:20px">
+        © <span id="year"></span> The Monotheist.
+        All rights reserved.
+    </p>
+
+    <p>
+        An independent personal publishing platform.
+    </p>
+
 </footer>
 
 <script>
-document.getElementById("yr").textContent = new Date().getFullYear();
 
-var CONTACT_EMAIL = "mehrajwan771@gmail.com";
+/* MOBILE NAVIGATION */
 
-document.getElementById("mf").onsubmit = function (e) {
-  e.preventDefault();
-  var f = this.elements;
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
 
-  location.href = "mailto:" + CONTACT_EMAIL +
-    "?subject=" + encodeURIComponent("Message from " + f[0].value) +
-    "&body=" + encodeURIComponent(f[2].value + "\n\n" + f[1].value);
+menuToggle.addEventListener("click", function () {
 
-  document.getElementById("ms").textContent = "Opening your email app…";
-};
+    const isOpen = navLinks.classList.toggle("open");
 
-/* AUTOMATIC LATEST OPINION LOADING */
-fetch("opinion.html")
-  .then(response => {
-    if (!response.ok) throw new Error("Could not load opinion page");
-    return response.text();
-  })
-  .then(html => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    const latest = doc.querySelector("article");
-    if (!latest) return;
+    menuToggle.setAttribute("aria-expanded", isOpen);
+    menuToggle.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation menu" : "Open navigation menu"
+    );
 
-    const title = latest.querySelector("h2")?.textContent || "";
-    const date = latest.querySelector(".date")?.textContent || "";
-    const text = latest.querySelector("p:not(.date)")?.textContent || "";
+    menuToggle.textContent = isOpen ? "✕" : "☰";
 
-    const card = document.createElement("div");
-    card.className = "card";
+});
 
-    const h3 = document.createElement("h3");
-    h3.textContent = title;
+/* CLOSE MENU AFTER NAVIGATION */
 
-    const d = document.createElement("p");
-    d.textContent = date;
+document.querySelectorAll(".nav-links a").forEach(link => {
 
-    const p = document.createElement("p");
-    p.textContent = text;
-    p.style.display = "-webkit-box";
-    p.style.webkitLineClamp = "3";
-    p.style.webkitBoxOrient = "vertical";
-    p.style.overflow = "hidden";
+    link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+        menuToggle.textContent = "☰";
+    });
 
-    const link = document.createElement("a");
-    link.className = "btn alt";
-    link.href = "opinion.html";
-    link.textContent = "Read more →";
+});
 
-    card.append(h3, d, p, link);
-    document.getElementById("latest-opinion").replaceChildren(card);
-  })
-  .catch(() => {
-    document.getElementById("latest-opinion").textContent =
-      "Visit the Opinion page to explore the latest writings.";
-  });
+/* DARK MODE */
+
+const themeToggle = document.getElementById("themeToggle");
+
+function applyTheme(theme) {
+
+    document.documentElement.setAttribute("data-theme", theme);
+
+    themeToggle.textContent =
+        theme === "dark" ? "Light mode" : "Dark mode";
+
+    try {
+        localStorage.setItem("monotheist-theme", theme);
+    } catch (error) {
+        // Theme remains usable even if browser storage is unavailable.
+    }
+
+}
+
+let savedTheme = null;
+
+try {
+    savedTheme = localStorage.getItem("monotheist-theme");
+} catch (error) {
+    savedTheme = null;
+}
+
+if (savedTheme === "dark" || savedTheme === "light") {
+    applyTheme(savedTheme);
+} else {
+    applyTheme(
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light"
+    );
+}
+
+themeToggle.addEventListener("click", function () {
+
+    const currentTheme =
+        document.documentElement.getAttribute("data-theme");
+
+    applyTheme(currentTheme === "dark" ? "light" : "dark");
+
+});
+
+/* AUTOMATIC COPYRIGHT YEAR */
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
 </script>
 
 </body>
